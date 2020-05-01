@@ -172,45 +172,257 @@ Core API function:
 
 `mxGraph.orderCells(back, cells)` – Moves the array of cells to the front or back of their siblings, depending on the flag, within a begin/end update.
 
-## Available Scripts
+## Layouts
 
-In the project directory, you can run:
+### Hierarchical
 
-### `yarn start`
+[mxHierarchicalLayout](https://jgraph.github.io/mxgraph/docs/js-api/files/layout/hierarchical/mxHierarchicalLayout-js.html)
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Use to create pyramid-like relationships, such as an organisational diagram
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+```ts
+const layout = new mxHierarchicalLayout(graph);
+layout.execute(graph.getDefaultParent());
+```
 
-### `yarn test`
+### Swimlane
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+[mxSwimlaneLayout](https://jgraph.github.io/mxgraph/docs/js-api/files/layout/hierarchical/mxSwimlaneLayout-js.html)
 
-### `yarn build`
+```ts
+const layout = new mxSwimlaneLayout(graph);
+layout.execute(graph.getDefaultParent());
+```
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Circular
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+[mxCircleLayout](https://jgraph.github.io/mxgraph/docs/js-api/files/layout/mxCircleLayout-js.html)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Layout nodes in a circle
 
-### `yarn eject`
+```ts
+const layout = new mxCircleLayout(graph);
+layout.execute(graph.getDefaultParent());
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Organic
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```ts
+var layout = new mxFastOrganicLayout(graph);
+layout.execute(graph.getDefaultParent());
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Tree layout
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Suitable for graphs that have no cycles (trees)
 
-## Learn More
+Compact:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```ts
+const layout = new mxCompactTreeLayout(graph);
+layout.execute(graph.getDefaultParent());
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Radial:
+
+```ts
+var layout = new mxRadialTreeLayout(graph);
+layout.execute(graph.getDefaultParent());
+```
+
+## Cell images
+
+To use images in cells, a shape must be specified in the default vertex style (or any named style).  Possible shapes are `mxConstants.SHAPE_IMAGE` and `mxConstants.SHAPE_LABEL`.  The code to change the shape used in the default vertex style, the following code is used:
+
+```ts
+var style = graph.getStylesheet().getDefaultVertexStyle();
+style[mxConstants.STYLE_SHAPE] = mxConstants.SHAPE_IMAGE;
+```
+
+For the default vertex style, the image to be displayed can be specified in a cell’s style using the `mxConstants.STYLE_IMAGE` key and the image `URL` as a value, for example:
+
+`image=http://www.example.com/image.gif`
+
+For a named style, the the stylename must be the first element of the cell style:
+
+`stylename;image=http://www.example.com/image.gif`
+
+A cell style can have any number of key=value pairs added, divided by a semicolon as follows:
+
+`[stylename;|key=value;]`
+
+## Labels
+
+The cell labels are defined by `getLabel` which uses `convertValueToString` if `labelsVisible` is `true`.
+
+## In-place editing
+
+In-place editing is started with a double-click or by typing `F2`.  Programmatically, edit is used to check if the cell is editable (`isCellEditable`) and call `startEditingAtCell`, which invokes `mxCellEditor.startEditing`.  The editor uses the value returned by `getEditingValue` as the editing value. 
+
+After in-place editing, `labelChanged` is called, which invokes `mxGraphModel.setValue`, which in turn calls `mxGraphModel.valueForCellChanged`
+
+## Tooltips
+
+Tooltips are implemented by `getTooltip`, which calls `getTooltipForCell` if a cell is under the mousepointer.
+
+```ts
+graph.getTooltipForCell = function(cell)
+{
+  var label = this.convertValueToString(cell);
+  return 'Tooltip for '+label;
+}
+```
+
+When using a config file, the function is overridden in the mxGraph section using the following entry:
+
+```xml
+<add as="getTooltipForCell"><![CDATA[
+  function(cell)
+  {
+    var label = this.convertValueToString(cell);
+    return 'Tooltip for '+label;
+  }
+]]></add>
+```
+
+For replacing the default implementation of `getTooltipForCell` (rather than replacing the function on a specific instance), the following code should be used after loading the JavaScript files, but before creating a new `mxGraph` instance using `mxGraph`:
+
+```ts
+mxGraph.prototype.getTooltipForCell = function(cell)
+{
+  var label = this.convertValueToString(cell);
+  return 'Tooltip for '+label;
+}
+```
+
+## Shapes & Styles
+
+The implementation of new shapes is demonstrated in the examples.  We’ll assume that we have implemented a custom shape with the name `BoxShape` which we want to use for drawing vertices.  To use this shape, it must first be registered in the cell renderer as follows:
+
+`mxCellRenderer.registerShape('box', BoxShape);`
+
+The code registers the `BoxShape` constructor under the name box in the cell renderer of the graph. The shape can now be referenced using the shape-key in a style definition.
+
+The cell renderer contains a set of additional shapes, namely one for each constant with a `SHAPE-` prefix in `mxConstants`.
+
+Styles are a collection of key, value pairs and a stylesheet is a collection of named styles.  The names are referenced by the cellstyle, which is stored in mxCell.style with the following format: `[stylename;|key=value;]`.
+
+When introducing a new shape, the name under which the shape is registered must be used in the stylesheet.  There are three ways of doing this:
+
+- By changing the default style, so that all vertices will use the new shape
+- By defining a new style, so that only vertices with the respective cellstyle will use the new shape
+- By using shape=box in the cellstyle’s optional list of key, value pairs to be overridden
+
+In the first case, the code to fetch and modify the default style for vertices is as follows:
+
+```ts
+var style = graph.getStylesheet().getDefaultVertexStyle();
+style[mxConstants.STYLE_SHAPE] = 'box';
+```
+
+The code takes the default vertex style, which is used for all vertices that do not have a specific cellstyle, and modifies the value for the shape-key in-place to use the new `BoxShape` for drawing vertices.  This is done by assigning the box value in the second line, which refers to the name of the `BoxShape` in the cell renderer.
+
+In the second case, a collection of key, value pairs is created and then added to the stylesheet under a new name. In order to distinguish the shapename and the stylename we’ll use `boxstyle` for the stylename:
+
+```ts
+var style = new Object();
+style[mxConstants.STYLE_SHAPE] = 'box';
+style[mxConstants.STYLE_STROKECOLOR] = '#000000';
+style[mxConstants.STYLE_FONTCOLOR] = '#000000';
+graph.getStylesheet().putCellStyle('boxstyle', style);
+```
+
+The code adds a new style with the name `boxstyle` to the stylesheet.  To use this style with a cell, it must be referenced from the cellstyle as follows:
+
+```ts
+var vertex = graph.insertVertex(parent, null, 'Hello, World!', 20, 20, 80, 20,
+             'boxstyle');
+```
+
+To summarize, each new shape must be registered in the `mxCellRenderer` with a unique name.  That name is then used as the value of the shape-key in a default or custom style.  If there are multiple custom shapes, then there should be a separate style for each shape.
+
+Inheriting Styles
+
+For `fill-`, `stroke-`, `gradient-`, `font-` and `indicatorColors` special keywords can be used. The `inherit` keyword for one of these colors will inherit the color for the same key from the parent cell.  
+
+The `swimlane` keyword does the same, but inherits from the nearest swimlane in the ancestor hierarchy.  Finally, the `indicated` keyword will use the color of the indicator as the color for the given key.
+
+## Scrollbars
+
+The `containers` overflow CSS property defines if scrollbars are used to display the graph.  For values of `auto` or `scroll`, the scrollbars will be shown.  Note that the `resizeContainer` flag is normally not used together with scrollbars, as it will resize the container to match the size of the graph after each change.
+
+## Multiplicities and Validation
+
+To control the possible connections in `mxGraph`, `getEdgeValidationError` is used. The default implementation of the function uses multiplicities, which is an array of `mxMultiplicity`. Using this class allows to establish simple multiplicities, which are enforced by the graph.
+
+The mxMultiplicity uses `mxCell.is` to determine for which terminals it applies.
+
+`getEdgeValidationError` is called whenever the connectivity of an edge changes. It returns an empty string or an error message if the edge is invalid or null if the edge is valid. If the returned string is not empty then it is displayed as an error message.
+
+`mxMultiplicity` allows to specify the multiplicity between a terminal and its possible neighbors. For example, if any rectangle may only be connected to, say, a maximum of two circles you can add the following rule to multiplicities:
+
+```ts
+graph.multiplicities.push(new mxMultiplicity(
+  true, 'rectangle', null, null, 0, 2, ['circle'],
+  'Only 2 targets allowed',
+  'Only shape targets allowed'));
+```
+
+This will display the first error message whenever a rectangle is connected to more than two circles and the second error message if a rectangle is connected to anything but a circle.
+
+For certain multiplicities, such as a minimum of `1` connection, which cannot be enforced at cell creation time (unless the cell is created together with the connection), `mxGraph` offers `validate` which checks all multiplicities for all cells and displays the respective error messages in an overlay icon on the cells.
+
+If a cell is collapsed and contains validation errors, a respective warning icon is attached to the collapsed cell.
+
+## Auto-Layout
+
+For automatic layout, the `getLayout` hook is provided in `mxLayoutManager`. It can be overridden to return a layout algorithm for the children of a given cell.
+
+## Unconnected edges
+
+The default values for all switches are designed to meet the requirements of general diagram drawing applications. A very typical set of settings to avoid edges that are not connected is the following:
+
+```tsx
+graph.setAllowDanglingEdges(false);
+graph.setDisconnectOnMove(false);
+```
+
+Setting the `cloneInvalidEdges` switch to true is optional.  This switch controls if edges are inserted after a copy, paste or clone-drag if they are invalid.  For example, edges are invalid if copied or control-dragged without having selected the corresponding terminals and allowDanglingEdges is false, in which case the edges will not be cloned if the switch is false.
+
+## Output
+
+To produce an XML representation for a diagram, the following code can be used.
+
+```ts
+var enc = new mxCodec(mxUtils.createXmlDocument());
+var node = enc.encode(graph.getModel());
+```
+
+```ts
+var xml = mxUtils.getXml(node);
+```
+
+To obtain a formatted string, `mxUtils.getPrettyXml` can be used instead.
+
+This string can now be stored in a local persistent storage (for example using Google Gears) or it can be passed to a backend using mxUtils.post as follows.  The url variable is the URL of the Java servlet, PHP page or HTTP handler, depending on the server.
+
+```ts
+var xmlString = encodeURIComponent(mxUtils.getXml(node));
+mxUtils.post(url, 'xml='+xmlString, function(req)
+{
+  // Process server response using req of type mxXmlRequest
+});
+```
+
+## Input
+
+To load an XML representation of a diagram into an existing graph object `mxUtils.load` can be used as follows. The url variable is the URL of the Java servlet, PHP page or HTTP handler that produces the XML string.
+
+```ts
+var xmlDoc = mxUtils.load(url).getXml();
+var node = xmlDoc.documentElement;
+var dec = new mxCodec(node.ownerDocument);
+dec.decode(node, graph.getModel());
+```
+
+See [Docs](./docs) for more API documentation and API usage examples.

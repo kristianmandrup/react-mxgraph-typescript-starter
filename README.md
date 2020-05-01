@@ -1,4 +1,24 @@
+# React mxgraph and TypeScript starter app
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+- React 16.13+
+- mxgraph 4.1+
+- TypeScript 3.7+ starter app
+
+Uses:
+
+- [ts-mxgraph](https://www.npmjs.com/package/ts-mxgraph)
+- [mxgraph](https://www.npmjs.com/package/mxgraph)
+
+## Demo
+
+Install dependencies `yarn install`
+
+Run `yarn start`
+
+<img src="./docs/images/mxgraph-hello-world.png" width="50%"/>
+
 
 ## Available Scripts
 

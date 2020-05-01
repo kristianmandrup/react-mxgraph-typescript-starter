@@ -25,6 +25,20 @@ Run `yarn start`
 - [mxgraph manual](https://jgraph.github.io/mxgraph/docs/manual.html#1.6.1)
 - [maxgraph API specification](https://jgraph.github.io/mxgraph/docs/js-api/files/index-txt.html)
 
+Other resources
+
+- [Video tutorial series 1-6: 2013](https://www.youtube.com/watch?v=ZnDTxbzvyfc&list=PLl7YvtNnYTsq6RQL-bDPNB2DK3pO9NLOl)
+
+Alternative: GoJS
+
+- [GoJS](https://gojs.net/latest/index.html)
+- [GoJS repo](https://github.com/NorthwoodsSoftware/GoJS)
+- [GoJS with React](https://gojs.net/latest/intro/react.html)
+- [Official GoJS React components](https://github.com/NorthwoodsSoftware/gojs-react)
+- [GoJS React Basic](https://github.com/NorthwoodsSoftware/GoJS-React-Basic)
+- [GoJS samples](https://gojs.net/latest/samples/index.html)
+- [GoJS video channel](https://www.youtube.com/channel/UC9We8EoX596-6XFjJDtZIDg)
+
 ### The mxGraph Model and archictecture
 
 Although the transactions to the model are stored on the model, mxGraph is designed in such a way that the main public API is through the mxGraph class.

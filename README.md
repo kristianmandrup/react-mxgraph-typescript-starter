@@ -186,64 +186,6 @@ Core API function:
 
 `mxGraph.orderCells(back, cells)` – Moves the array of cells to the front or back of their siblings, depending on the flag, within a begin/end update.
 
-## Layouts
-
-### Hierarchical
-
-[mxHierarchicalLayout](https://jgraph.github.io/mxgraph/docs/js-api/files/layout/hierarchical/mxHierarchicalLayout-js.html)
-
-Use to create pyramid-like relationships, such as an organisational diagram
-
-```ts
-const layout = new mxHierarchicalLayout(graph);
-layout.execute(graph.getDefaultParent());
-```
-
-### Swimlane
-
-[mxSwimlaneLayout](https://jgraph.github.io/mxgraph/docs/js-api/files/layout/hierarchical/mxSwimlaneLayout-js.html)
-
-```ts
-const layout = new mxSwimlaneLayout(graph);
-layout.execute(graph.getDefaultParent());
-```
-
-### Circular
-
-[mxCircleLayout](https://jgraph.github.io/mxgraph/docs/js-api/files/layout/mxCircleLayout-js.html)
-
-Layout nodes in a circle
-
-```ts
-const layout = new mxCircleLayout(graph);
-layout.execute(graph.getDefaultParent());
-```
-
-### Organic
-
-```ts
-var layout = new mxFastOrganicLayout(graph);
-layout.execute(graph.getDefaultParent());
-```
-
-### Tree layout
-
-Suitable for graphs that have no cycles (trees)
-
-Compact:
-
-```ts
-const layout = new mxCompactTreeLayout(graph);
-layout.execute(graph.getDefaultParent());
-```
-
-Radial:
-
-```ts
-var layout = new mxRadialTreeLayout(graph);
-layout.execute(graph.getDefaultParent());
-```
-
 ## Cell images
 
 To use images in cells, a shape must be specified in the default vertex style (or any named style).  Possible shapes are `mxConstants.SHAPE_IMAGE` and `mxConstants.SHAPE_LABEL`.  The code to change the shape used in the default vertex style, the following code is used:
@@ -439,4 +381,4 @@ var dec = new mxCodec(node.ownerDocument);
 dec.decode(node, graph.getModel());
 ```
 
-See [Docs](./docs) for more API documentation and API usage examples.
+See the extensive [Documentation](./docs) included for API documentation and usage examples.

@@ -1,0 +1,3 @@
+# mxClient
+
+Bootstrapping mechanism for the `mxGraph` thin client.  The production version of this file contains all code required to run the `mxGraph` thin client, as well as global constants to identify the browser and operating system in use.  You may have to load [chrome contentAreaUtils](chrome://global/content/contentAreaUtils.js) in your page to disable certain security restrictions in Mozilla.

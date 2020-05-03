@@ -1,0 +1,15 @@
+# How to Guides
+
+- [Add controls to cell](./Add-Controls-to-cells.md)
+- [Create advanced clipboard](./Advanced-Clipboard.md)
+- [Do animations](./Animate.md)
+- [Do auto-layout of nodes](./Auto-Layout.md)
+- [Collapse cell](./Collapse-cell.md)
+- [Create anchors](./Create-Anchors.md)
+- [Create boundary events](./Create-Boundary-Events.md)
+- [Create toolbar](./Create-Toolbar.md)
+- [Create dynamic cell style](./Dynamic-cell-style.md)
+- [Dynamic toolbar](./Dynamic-Toolbar.md)
+- [Do native image drop](./Native-Image-Drop.md)
+- [Use codec to load and save graph model](./Use-Codec-Load-Save-Model.md)
+- [Custom Vertex Wiring](./Wires.md)

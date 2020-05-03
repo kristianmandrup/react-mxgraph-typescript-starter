@@ -381,4 +381,12 @@ var dec = new mxCodec(node.ownerDocument);
 dec.decode(node, graph.getModel());
 ```
 
-See the extensive [Documentation](./docs) included for API documentation and usage examples.
+## More Documentation
+
+- [Documentation](./docs) included for API documentation and usage examples.
+- [Example](./examples) apps demonstrating common functionality implementations
+- [How to guides](./docs/HowTo/_TOC.md) that explain the example apps in detail
+
+Note that the `examples` were extracted from [msgraph-js](https://github.com/jgraph/mxgraph-js/tree/master/javascript/examples) and can be run directly via each `index.html` using a static file server.
+
+If you are using VS Code, install the `Live Server` extension and right click on an html file such as `examples/anchors.html` in a cloned `msgraph-js` project and choose `Open with Live Server`.

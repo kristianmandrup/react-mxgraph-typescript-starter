@@ -6,6 +6,7 @@
 - [Do auto-layout of nodes](./Auto-Layout.md)
 - [Collapse cell](./Collapse-cell.md)
 - [Create anchors](./Create-Anchors.md)
+- [Increase edge detection tolerance](./Increase-edge-detection-tolerance.md)
 - [Create boundary events](./Create-Boundary-Events.md)
 - [Create toolbar](./Create-Toolbar.md)
 - [Create dynamic cell style](./Dynamic-cell-style.md)

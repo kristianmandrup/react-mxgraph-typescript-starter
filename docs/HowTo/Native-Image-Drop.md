@@ -74,85 +74,148 @@ Use barrier to handle multiple files as a single insert.
 ```js
 function handleDrop(graph, file, x, y)
 {
+```
+
+if the filetype is an image, create a `FileReader` instance `reader` 
+
+```js
   if (file.type.substring(0, 5) == 'image') {
   var reader = new FileReader();
+```
 
-  reader.onload = function(e)
-  {
-    // Gets size of image for vertex
+Create an `onload` function for the `reader`
+
+```js
+  reader.onload = function(e) {
+```
+
+Gets size of image for vertex
+
+```js
     var data = e.target.result;
+```
 
-    // SVG needs special handling to add viewbox if missing and
-    // find initial size from SVG attributes (only for IE11)
-    if (file.type.substring(0, 9) == 'image/svg')
-      {
-        var comma = data.indexOf(',');
-        var svgText = atob(data.substring(comma + 1));
-        var root = mxUtils.parseXml(svgText);
+SVG needs special handling to add viewbox if missing and find initial size from SVG attributes (only for IE11)
 
-        // Parses SVG to find width and height
-        if (root != null)
-        {
-          var svgs = root.getElementsByTagName('svg');
+If the file type is an SVG image, get the root element of the image
 
-          if (svgs.length > 0)
-          {
-            var svgRoot = svgs[0];
-            var w = parseFloat(svgRoot.getAttribute('width'));
-            var h = parseFloat(svgRoot.getAttribute('height'));
+```js
+if (file.type.substring(0, 9) == 'image/svg') {
+  var comma = data.indexOf(',');
+  var svgText = atob(data.substring(comma + 1));
+  var root = mxUtils.parseXml(svgText);
+```
 
-            // Check if viewBox attribute already exists
-            var vb = svgRoot.getAttribute('viewBox');
+Parses SVG to find width and height. If `root` is an element
 
-            if (vb == null || vb.length == 0)
-            {
-              svgRoot.setAttribute('viewBox', '0 0 ' + w + ' ' + h);
-            }
-            // Uses width and height from viewbox for
-            // missing width and height attributes
-            else if (isNaN(w) || isNaN(h))
-            {
-              var tokens = vb.split(' ');
+```js
+  if (root != null) {
+```
 
-              if (tokens.length > 3)
-              {
-                w = parseFloat(tokens[2]);
-                h = parseFloat(tokens[3]);
-              }
-            }
+Get all `svg` elements contained within the `root`
 
-                    w = Math.max(1, Math.round(w));
-                    h = Math.max(1, Math.round(h));
+```js
+    var svgs = root.getElementsByTagName('svg');
+```
 
-            data = 'data:image/svg+xml,' + btoa(mxUtils.getXml(svgs[0], '\n'));
-            graph.insertVertex(null, null, '', x, y, w, h, 'shape=image;image=' + data + ';');
-          }
-        }
-      }
-    else
-    {
-                var img = new Image();
+If there are `svg` elements, get the first (root) svg element and calculate widht and height of entire
+SVG from that.
 
-                img.onload = function()
-                {
-                  var w = Math.max(1, img.width);
-                  var h = Math.max(1, img.height);
-                  
-                  // Converts format of data url to cell style value for use in vertex
-            var semi = data.indexOf(';');
-            
-            if (semi > 0)
-            {
-              data = data.substring(0, semi) + data.substring(data.indexOf(',', semi + 1));
-            }
+```js
+if (svgs.length > 0) {
+  var svgRoot = svgs[0];
+  var w = parseFloat(svgRoot.getAttribute('width'));
+  var h = parseFloat(svgRoot.getAttribute('height'));
+```
 
-            graph.insertVertex(null, null, '', x, y, w, h, 'shape=image;image=' + data + ';');
-                };
+Check if viewBox attribute already exists
 
-                img.src = data;
-    }
-          };
+```js
+var vb = svgRoot.getAttribute('viewBox');
+```
 
-  reader.readAsDataURL(file);
+If viewbox not found, set a viewbox of the SVG width/height on the svg root element
+
+```js
+if (vb == null || vb.length == 0) {
+  svgRoot.setAttribute('viewBox', '0 0 ' + w + ' ' + h);
 }
+```
+
+Uses width and height from viewbox for missing width and height attributes
+
+```js
+else if (isNaN(w) || isNaN(h))
+{
+  var tokens = vb.split(' ');
+
+  if (tokens.length > 3)
+  {
+    w = parseFloat(tokens[2]);
+    h = parseFloat(tokens[3]);
+  }
+}
+```
+
+Calculate width and height, making sure they are > 0 in any case.
+
+```js
+w = Math.max(1, Math.round(w));
+h = Math.max(1, Math.round(h));
+```
+
+Define the image data using the xml extracted from the root svg element.
+Insert a vertex into the graph using `shape=image`, the dimensions (`w` and `h`) and the image `data`.
+
+```js
+data = 'data:image/svg+xml,' + btoa(mxUtils.getXml(svgs[0], '\n'));
+graph.insertVertex(null, null, '', x, y, w, h, 'shape=image;image=' + data + ';');
+```
+
+If not an SVG file, create new `Image` instance
+
+```js
+else {
+  var img = new Image();
+```
+
+Create image `onload` handler function
+
+```js
+  img.onload = function() {
+```
+
+Calculate width `w` and height `h` of image `img`
+
+```js
+    var w = Math.max(1, img.width);
+    var h = Math.max(1, img.height);
+```
+
+Converts format of data url to cell style value for use in vertex
+
+```js
+var semi = data.indexOf(';');
+if (semi > 0) {
+  data = data.substring(0, semi) + data.substring(data.indexOf(',', semi + 1));
+}
+```
+
+Insert vertex with `shape=image` in graph, using image sized (width, height) and image data
+
+```js
+    graph.insertVertex(null, null, '', x, y, w, h, 'shape=image;image=' + data + ';');
+  };
+```
+
+Set image `src` to image data loaded
+
+```js
+img.src = data;
+```
+
+Read file as data url (triggers `onload` handler of `reader`)
+
+```js
+reader.readAsDataURL(file);
 ```

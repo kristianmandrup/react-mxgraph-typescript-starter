@@ -1,0 +1,1 @@
+# Display zoomed graph region

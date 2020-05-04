@@ -1,6 +1,14 @@
 # How to create custom events
 
-This example demonstrates creating a graph container and using the mxDivResizer to update the size, interaction on the graph, including: 
+Display
+
+![Display](../images/examples/events/events-1.png "Display")
+
+Right click event to disdplay menu
+
+![Right click menu](../images/examples/events/events-2.png "Right click menu")
+
+This example demonstrates creating a graph container and using the mxDivResizer to update the size, interaction on the graph, including:
 
 - marquee selection
 - custom tooltips

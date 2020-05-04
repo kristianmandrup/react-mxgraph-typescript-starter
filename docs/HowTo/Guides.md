@@ -1,5 +1,9 @@
 # How to use the Guides feature
 
+Guides
+
+![Guides](../images/examples/guides/guides-1.png "Guides")
+
 Demonstrates the guides feature which aligns the current selection to the existing vertices
 in the graph. This feature is in RFC state.
 

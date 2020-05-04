@@ -1,5 +1,10 @@
 # How to create custom Boundary events
 
+Boundary events
+
+![Boundary](../images/examples/boundary.png "Boundary")
+
+
 Disable the built-in context menu
 
 ```js

@@ -1,5 +1,9 @@
 # How to add Controls to Cells
 
+Cell controls
+
+![Cell controls](../images/examples/control.png "Cell controls")
+
 Creates the graph inside the given container and enables panning
 
 ```js

@@ -1,5 +1,9 @@
 # How to create Custom markers
 
+Markers
+
+![Markers](../images/examples/markers.png "Markers")
+
 Custom markers and customizing the built-in markers.
 
 Enables guides

@@ -1,5 +1,13 @@
 # How to change style of Collapsed cell
 
+Collapsed graph
+
+![collapsed](../images/examples/collapse/collapse-1.png "collapsed graph")
+
+Exploded graph
+
+![exploded](../images/examples/collapse/collapse-2.png "exploded graph")
+
 Create graph
 
 ```js

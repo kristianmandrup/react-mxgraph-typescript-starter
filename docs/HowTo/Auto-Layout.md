@@ -1,5 +1,13 @@
 # How to Auto layout
 
+Initial display
+
+![Initial display](../images/examples/auto-layout/auto-layout-1.png "Initial display")
+
+Auto layout
+
+![Layout](../images/examples/auto-layout/auto-layout-2.png "Layout")
+
 ```js
   mxEvent.disableContextMenu(container);
 ```  

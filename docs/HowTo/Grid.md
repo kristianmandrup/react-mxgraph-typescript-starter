@@ -1,5 +1,9 @@
 # How to draw a grid
 
+Grid
+
+![Grid](../images/examples/grid.png "Grid")
+
 Drawing a grid dynamically using HTML 5 canvas.
 
 Disable context menu

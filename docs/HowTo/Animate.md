@@ -1,5 +1,9 @@
 # How to Animate
 
+Animated edge
+
+![Animated edge](../images/examples/animate.png "Animated edge")
+
 ```html
 <style type="text/css">
   .flow {

@@ -1,5 +1,9 @@
 # How to add icons to selected vertices to carry out special operations
 
+Context icons
+
+![Context icons](../images/examples/context-icons.png "Context icons")
+
 Demonstrates adding icons to selected vertices to carry out special operations.
 
 ```js

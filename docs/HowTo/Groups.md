@@ -1,5 +1,13 @@
 # How to use groups
 
+Group of cells
+
+![Group](../images/examples/groups/groups-1.png "Group")
+
+Group collapsed
+
+![Group collapsed](../images/examples/groups/groups-2.png "Group collapsed")
+
 Demonstrates using cells as parts of other cells.
 
 Overrides check for valid roots

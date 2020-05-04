@@ -1,5 +1,9 @@
 # How to display icons on vertices as mouse hovers over
 
+Hover icons
+
+![Hover icons](../images/examples/hover-icons.png "Hover icons")
+
 Demonstrates showing icons on vertices as mouse hovers over them.
 
 Defines an icon for creating new connections in the connection handler.

@@ -1,5 +1,9 @@
 # How to do native Image drop into graph
 
+Drop image
+
+![Drop image](../images/examples/drop-image.png "Drop image")
+
 Demonstrates handling native drag and drop of images (requires modern browser).
 
 Checks if the browser is supported

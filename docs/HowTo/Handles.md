@@ -1,5 +1,13 @@
 # How to use handles
 
+Handles
+
+![Handles](../images/examples/handles/handles-1.png "Handles")
+
+Using rotate handle
+
+![Rotated](../images/examples/handles/handles-2.png "Rotated")
+
 Demonstrates using mxHandle to change custom styles interactively.
 
 ```js

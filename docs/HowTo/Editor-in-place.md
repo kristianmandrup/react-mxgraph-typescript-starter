@@ -1,5 +1,21 @@
 # How to enable and use in-place editing
 
+Editing display
+
+![Editing display](../images/examples/editing/editing-1.png "Editing display")
+
+Edit first value
+
+![Edit first value](../images/examples/editing/editing-2.png "Edit first value")
+
+Change first value
+
+![Change first value](../images/examples/editing/editing-3.png "Change first value")
+
+Edit second value
+
+![Edit second value](../images/examples/editing/editing-4.png "Edit second value")
+
 Using the in-place editor trigger to specify the editing value and write the new value into
 a specific field of the user object. Wrapping and DOM nodes as labels are also demonstrated here.
 

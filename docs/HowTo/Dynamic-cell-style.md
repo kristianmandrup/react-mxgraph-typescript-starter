@@ -1,5 +1,9 @@
 # How to dynamically change cell style
 
+Dynamic cell style
+
+![Dynamic cell style](../images/examples/dynamic-style.png "Dynamic cell style")
+
 Demonstrates changing the style of a cell dynamically by overriding `mxGraphModel.getStyle`.
 
 Creates the graph inside the given container

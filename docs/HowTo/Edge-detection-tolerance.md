@@ -1,8 +1,11 @@
 # How to increase the hit detection tolerance on edges
 
+Edge tolerance
+
+![Edge tolerance](../images/examples/edge-tolerance.png "Edge tolerance")
+
 Overrides the mouse event dispatching mechanism to update the
-cell which is associated with the event in case the native hit
-detection did not return anything.
+cell which is associated with the event in case the native hit detection did not return anything.
 
 ```js
 var mxGraphFireMouseEvent = mxGraph.prototype.fireMouseEvent;

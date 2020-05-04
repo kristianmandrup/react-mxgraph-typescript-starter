@@ -1,5 +1,19 @@
 # How to create a Dynamic Toolbar
 
+Dynamic toolbar
+
+![Dynamic toolbar](../images/examples/dynamic-toolbar/dynamic-toolbar-1.png "Dynamic toolbar")
+
+Drag circle from toolbar palette
+
+![Drag circle](../images/examples/dynamic-toolbar/dynamic-toolbar-2.png "Drag circle")
+
+
+Unselect circle
+
+![Unselect circle](../images/examples/dynamic-toolbar/dynamic-toolbar-3.png "Unselect circle")
+
+
 Demonstrates changing the state of the toolbar at runtime.
 
 Defines an icon for creating new connections in the connection handler.

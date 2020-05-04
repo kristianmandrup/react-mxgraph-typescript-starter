@@ -1,5 +1,13 @@
 # How to use ports
 
+Ports
+
+![Ports](../images/examples/ports/ports-1.png "Ports")
+
+Create edge from port
+
+![Ports](../images/examples/ports/ports-2.png "Ports")
+
 Demonstrates using the `isPort` hook for visually connecting to another cell.
 
 Creates the graph inside the given container and enables:

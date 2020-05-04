@@ -1,5 +1,9 @@
 # How to create Wired between Vertices
 
+Wires
+
+![Wires](../images/examples/wires.png "Wires")
+
 - Edge-to-edge connections: We store the point where the mouse
 was released in the terminal points of the edge geometry and
 use that point to find the nearest segment on the target edge

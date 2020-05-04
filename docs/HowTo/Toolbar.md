@@ -1,5 +1,9 @@
 # How to Create Toolbar
 
+Toolbar
+
+![Toolbar](../images/examples/toolbar.png "Toolbar")
+
 See [examples/toolbar.html](./../../examples/toolbar.html) for the full source code
 
 Select or create container element to contain the Toolbar, here `tbContainer`

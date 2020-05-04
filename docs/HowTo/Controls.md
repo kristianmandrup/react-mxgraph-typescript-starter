@@ -2,7 +2,7 @@
 
 Cell controls
 
-![Cell controls](../images/examples/control.png "Cell controls")
+![Cell controls](../images/examples/controls.png "Cell controls")
 
 Creates the graph inside the given container and enables panning
 

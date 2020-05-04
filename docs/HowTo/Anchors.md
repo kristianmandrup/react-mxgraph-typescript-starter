@@ -2,6 +2,19 @@
 
 Overridden to define per-shape connection points
 
+Hovering on vertex node
+
+![Hovering on vertex node](../images/anchors/anchors-1.png "Hovering on vertex node")
+
+Hovering on anchor
+
+![Hovering on anchor](../images/anchors/anchors-2.png "Hovering on anchor")
+
+Dragging anchor
+
+![Dragging anchor](../images/anchors/anchors-3.png "Dragging anchor")
+
+
 ```js
 mxGraph.prototype.getAllConnectionConstraints = function(terminal, source)
 {

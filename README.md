@@ -384,7 +384,8 @@ dec.decode(node, graph.getModel());
 ## More Documentation
 
 - [Documentation](./docs) included for API documentation and usage examples.
-- [Example](./examples) apps demonstrating common functionality implementations
+- [Examples](./examples) apps demonstrating common functionality implementations
+- [API](./docs/API/_TOC.md) API overview
 - [How to guides](./docs/HowTo/_TOC.md) that explain the example apps in detail
 
 Note that the `examples` were extracted from [msgraph-js](https://github.com/jgraph/mxgraph-js/tree/master/javascript/examples) and can be run directly via each `index.html` using a static file server.

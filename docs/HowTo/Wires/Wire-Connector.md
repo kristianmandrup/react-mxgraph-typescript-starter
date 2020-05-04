@@ -5,12 +5,19 @@ Direction currently ignored here
 ```js
 mxEdgeStyle.WireConnector = function(state, source, target, hints, result)
 {
-// Creates array of all way- and terminalpoints
+```
+
+Creates array of all way- and terminalpoints
+
+```js
 var pts = state.absolutePoints;
 var horizontal = true;
 var hint = null;
+```
 
-// Gets the initial connection from the source terminal or edge
+Gets the initial connection from the source terminal or edge
+
+```js
 if (source != null && state.view.graph.model.isEdge(source.cell))
 {
   horizontal = state.style['sourceConstraint'] == 'horizontal';
@@ -18,8 +25,11 @@ if (source != null && state.view.graph.model.isEdge(source.cell))
 else if (source != null)
 {
   horizontal = source.style['portConstraint'] != 'vertical';
-  
-  // Checks the direction of the shape and rotates
+```
+
+Checks the direction of the shape and rotates
+
+```js
   var direction = source.style[mxConstants.STYLE_DIRECTION];
   
   if (direction == 'north' || direction == 'south')
@@ -27,9 +37,12 @@ else if (source != null)
     horizontal = !horizontal;
   }
 }
+```
 
-// Adds the first point
-// TODO: Should move along connected segment
+Adds the first point
+TODO: Should move along connected segment
+
+```js
 var pt = pts[0];
 
 if (pt == null && source != null)
@@ -42,8 +55,11 @@ else if (pt != null)
 }
 
 var first = pt;
+```
 
-// Adds the waypoints
+Adds the waypoints
+
+```js
 if (hints != null && hints.length > 0)
 {
   // FIXME: First segment not movable
@@ -86,8 +102,11 @@ else
 {
   hint = pt;
 }
+```
 
-// Adds the last point
+Adds the last point
+
+```js
 pt = pts[pts.length - 1];
 
 // TODO: Should move along connected segment
@@ -110,8 +129,11 @@ else if (pt.x != hint.x && first.y != pt.y)
 };
 
 mxStyleRegistry.putValue('wireEdgeStyle', mxEdgeStyle.WireConnector);
+```
 
-// This connector needs an mxEdgeSegmentHandler
+This connector needs an mxEdgeSegmentHandler
+
+```js
 mxGraphCreateHandler = mxGraph.prototype.createHandler;
 mxGraph.prototype.createHandler = function(state)
 {

@@ -47,30 +47,46 @@ Edges have no connection points
 mxPolyline.prototype.constraints = null;
 ```
 
+Creates the graph inside the given container
+
 ```js
-// Creates the graph inside the given container
 var graph = new mxGraph(container);
 graph.setConnectable(true);
+```
 
-// Enables connect preview for the default edge style
+Enables connect preview for the default edge style
+
+```js
 graph.connectionHandler.createEdgeState = function(me)
 {
   var edge = graph.createEdge(null, null, null, null, null);
   
   return new mxCellState(this.graph.view, edge, this.graph.getCellStyle(edge));
 };
+```
 
-// Specifies the default edge style
+Specifies the default edge style
+
+```js
 graph.getStylesheet().getDefaultEdgeStyle()['edgeStyle'] = 'orthogonalEdgeStyle';
+```
 
-// Enables rubberband selection
+Enables rubberband selection
+
+```js
 new mxRubberband(graph);
+```
 
-// Gets the default parent for inserting new cells. This
-// is normally the first child of the root (ie. layer 0).
+Gets the default parent for inserting new cells. 
+This is normally the first child of the root (ie. layer 0).
+
+```js
 var parent = graph.getDefaultParent();
+```
 
-// Adds cells to the model in a single step
+Adds cells to the model in a single step
+
+```js
 graph.getModel().beginUpdate();
 try
 {
@@ -78,9 +94,13 @@ try
   var v2 = graph.insertVertex(parent, null, 'World!', 200, 150, 80, 30);
   var e1 = graph.insertEdge(parent, null, '', v1, v2);
 }
+```
+
+Updates the display
+
+```js
 finally
-{
-  // Updates the display
+{  
   graph.getModel().endUpdate();
 }
 ```

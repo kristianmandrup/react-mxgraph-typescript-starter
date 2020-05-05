@@ -15,6 +15,12 @@ export const setGeometryPoints = (cell: any, points?: any) => {
   return cell
 }
 
+interface InsertVertexOpts {
+  constituent?: boolean
+  id?: string
+  relative?: boolean
+  geometry?: any
+}
 
 export class DrawLayer {
   layer: any
@@ -25,17 +31,20 @@ export class DrawLayer {
     this.layer = layer
   }
 
-  insertVertex(label: string, pos: IPosition, size: ISize, style: string, {id, relative, geometry}: any = {}): any {
-    const vertex = this.graph.insertVertex(this.layer, id, label, pos.x, pos.y, size.width, size.height, style, relative)
+  insertVertex(labelOrValue: any, pos: IPosition, size: ISize, style: string, {constituent, id, relative, geometry}: InsertVertexOpts = {}): any {
+    if (constituent) {
+      style = 'constituent=1;' + style
+    }
+    const vertex = this.graph.insertVertex(this.layer, id, labelOrValue, pos.x, pos.y, size.width, size.height, style, relative)
     if (geometry) {
       vertex.geometry = vertex
     }    
     return vertex
   }
 
-  insertEdge(label: string, fromVertex: any, toVertex: any, style: string, {id, relative, points}: any = {}): any {
+  insertEdge(labelOrValue: any, fromVertex: any, toVertex: any, style: string, {id, relative, points}: any = {}): any {
     id = id || null
-    const edge = this.graph.insertEdge(this.layer, id, label, fromVertex, toVertex, style, relative)
+    const edge = this.graph.insertEdge(this.layer, id, labelOrValue, fromVertex, toVertex, style, relative)
     if (points) setGeometryPoints(edge)
     return edge
   }

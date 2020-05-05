@@ -1,6 +1,8 @@
 import { mxgraphFactory } from "ts-mxgraph";
 import { DrawLayer } from './Layers';
 import { StyleSheet } from './Stylesheet';
+import { VertexToolHandler } from './ContextIcon';
+import { Graph } from './Graph';
 
 const { mxMorphing, mxEvent, mxCellState, mxRubberband, mxKeyHandler, mxGraphModel, mxGraph } = mxgraphFactory({
   mxLoadResources: false,
@@ -137,6 +139,25 @@ export class Graph {
       var edge = this.graph.createEdge(null, null, null, null, null);      
       return new mxCellState(this.graph.view, edge, this.graph.getCellStyle(edge));
     };
+  }
+
+  createVertexHandler(...args) {
+    this.graph.createHandler = (state) => {
+      if (state != null && this.model.isVertex(state.cell)) {
+        return new VertexToolHandler(this.graph, state);
+      }
+
+      return mxGraph.prototype.createHandler(state);
+    }
+  };  
+
+  setHtmlLabels(value: boolean) {
+    this.graph.setHtmlLabels(value);  
+  }
+  
+
+  setPanning(value: boolean) {
+    this.graph.setPanning(value)
   }
 
   setEnabled(value: boolean) {

@@ -84,9 +84,35 @@ try
   var v1 = graph.insertVertex(parent, null, 'Hello', 20, 80, 80, 30);
   v1.setConnectable(false);
   var v11 = graph.insertVertex(v1, null, '', 1, 1, 10, 10);
+```
+
+The offset defines the port position. Try changing the `x` value from `-5` to `-50`
+The port vertex must be set to relative to be drawn relative to the "container" vertex cell.
+
+```js
+  // lower port
   v11.geometry.offset = new mxPoint(-5, -5);
   v11.geometry.relative = true;
+```
+
+The `x` and `y` position (1, 0) are somehow relative.
+
+Try `-1, 0` and `-1, 1`, that should put the port vertex in the opposite corners
+
+1,0: top right
+1,1: bottom right
+-1,0: top left
+-1,1: bottom left
+
+```js
   var v12 = graph.insertVertex(v1, null, '', 1, 0, 10, 10);
+```
+
+The offset defines the port position. Try changing the `x` value from `-5` to `-50`
+The port vertex must be set to relative to be drawn relative to the "container" vertex cell.
+
+```js  
+  // upper port
   v12.geometry.offset = new mxPoint(-5, -5);
   v12.geometry.relative = true;
   var v2 = graph.insertVertex(parent, null, 'World!', 200, 150, 80, 30);

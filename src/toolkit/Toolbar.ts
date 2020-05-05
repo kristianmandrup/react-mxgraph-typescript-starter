@@ -33,7 +33,6 @@ export const createToolbarDOMElement = ({top, width}: {top: number, width: numbe
   return tbContainer
 }
 
-
 export class Toolbar {
   graph: any
   toolbar: any

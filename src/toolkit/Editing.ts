@@ -1,4 +1,9 @@
-import { IRegionCalc } from './Editing';
+import { mxgraphFactory } from "ts-mxgraph";
+
+const { mxEvent, mxUtils, mxGraph } = mxgraphFactory({
+  mxLoadResources: false,
+  mxLoadStylesheets: false,
+});
 
 export interface IRegionCalc {
   determine(point: any): string
@@ -16,18 +21,19 @@ export class RegionCalc implements IRegionCalc {
   }
 
   determine(point: any): string {
-    return this.inSeondHalf(point) ? 'second' : 'first'
+    return this.inSecondHalf(point) ? 'second' : 'first'
   }
 }
 
-const createRow = ({textAlign, fontSize, color}) => {
-  var tr1 = document.createElement('tr');
-  var td1 = document.createElement('td');
-  td1.style.textAlign = textAlign || 'center';
-  td1.style.fontSize = fontSize || '12px';
-  td1.style.color = color || '#774400';
-  mxUtils.write(td1, cell.value.first);
-  return td1
+const createRow = (cell, {textAlign, fontSize, color, getLabel}) => {
+  const tr = document.createElement('tr');
+  const td = document.createElement('td');
+  td.style.textAlign = textAlign || 'center';
+  td.style.fontSize = fontSize || '12px';
+  td.style.color = color || '#774400';
+  mxUtils.write(td, getLabel(cell.value));
+  tr.appendChild(td);
+  return tr
 }
 
 // TODO: refactor and generalise
@@ -43,12 +49,9 @@ export const getLabel = ({textAlign, fontSize, color, getLabels}) => (cell) => {
     second: (value) => value.second
   }
 
-  const td1 = createRow({textAlign, fontSize, color, getLabel: getLabels.first })
-  const td2 = createRow({textAlign, fontSize, color, getLabel: getLabels.second })
+  const tr1 = createRow(cell, {textAlign, fontSize, color, getLabel: getLabels.first })
+  const tr2 = createRow(cell, {textAlign, fontSize, color, getLabel: getLabels.second })
     
-  tr1.appendChild(td1);
-  tr2.appendChild(td2);
-
   body.appendChild(tr1);
   body.appendChild(tr2);
   
@@ -57,7 +60,7 @@ export const getLabel = ({textAlign, fontSize, color, getLabels}) => (cell) => {
   return table;
 };
 
-export const getEditingValue = (cell, evt) => {
+export const getEditingValue = getFieldnameForEvent => (cell, evt) => {
   evt.fieldname = getFieldnameForEvent(cell, evt);
 
   return cell.value[evt.fieldname] || '';
@@ -75,7 +78,7 @@ export const labelChanged = (cell, newValue, trigger) => {
     value[name] = newValue;
     newValue = value;
     
-    mxGraph.prototype.labelChanged.apply(this, arguments);
+    mxGraph.prototype.labelChanged(cell, newValue, trigger);
   }
 };
 
@@ -89,7 +92,7 @@ export class Editing {
   }
 
   calcPoint(evt) {
-    return mxUtils.convertPoint(graph.container, mxEvent.getClientX(evt), mxEvent.getClientY(evt));
+    return mxUtils.convertPoint(this.graph.container, mxEvent.getClientX(evt), mxEvent.getClientY(evt));
   }
 
   createRegionCalc(state): IRegionCalc {
@@ -103,7 +106,7 @@ export class Editing {
     
     // Finds the relative coordinates inside the cell
     var point = this.calcPoint(evt)
-    var state = graph.getView().getState(cell);
+    var state = this.graph.getView().getState(cell);
     const regionCalc = this.createRegionCalc(state)
     
     if (state != null) {

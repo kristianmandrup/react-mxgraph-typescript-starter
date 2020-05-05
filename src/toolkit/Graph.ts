@@ -97,7 +97,6 @@ export class Graph {
     this.model.endUpdate()
   }
 
-
   get defaultParent() {
     return this.graph.getDefaultParent();
   }

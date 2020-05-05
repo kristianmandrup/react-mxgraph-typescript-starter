@@ -10,6 +10,8 @@ interface IStyleArgs {
   imageBorder?: string
   startSize?: number
   noLabel?: number
+  verticalLabelPosition?: string
+  labelPosition?: string
 }
 
 

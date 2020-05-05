@@ -74,7 +74,7 @@ Use `first` as default
 return 'first';
 ```
 
-Returns a HTML representation of the cell where the upper half is the first value, 
+Returns a HTML representation of the cell where the upper half is the first value,
 lower half is second value
 
 ```js

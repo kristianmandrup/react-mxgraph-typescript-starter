@@ -23,5 +23,3 @@ Error port connection
 Multi port connection
 
 ![Multi port connection](../images/examples/ports-editor/ports-5.png "Multi port connection")
-
-

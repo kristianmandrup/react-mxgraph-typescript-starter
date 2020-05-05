@@ -21,7 +21,6 @@ graph.setConnectable(true);
 graph.setTooltips(true);
 ```
 
-
 Sets the default edge style
 
 ```js

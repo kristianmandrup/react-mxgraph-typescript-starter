@@ -171,7 +171,7 @@ Enables rubberband selection
 new mxRubberband(graph);
 ```
 
-Gets the default parent for inserting new cells. 
+Gets the default parent for inserting new cells.
 This is normally the first child of the root (ie. layer 0).
 
 ```js

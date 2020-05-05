@@ -7,4 +7,3 @@ Initial display
 Circular ports
 
 ![Circular ports](../images/examples/port-refs/port-refs-2.png "Circular ports")
-

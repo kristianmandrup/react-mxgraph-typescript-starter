@@ -4,7 +4,7 @@ Stencils
 
 ![Stencils](../images/examples/stencils.png "Stencils")
 
-Demonstrates using an XML file to define new stencils to be used as shapes. 
+Demonstrates using an XML file to define new stencils to be used as shapes.
 See `docs/stencils.xsd` for the XML schema file.
 
 Sets the global shadow color

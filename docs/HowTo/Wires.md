@@ -14,7 +14,7 @@ mxGraphView.updateFixedTerminalPoint.
 computes its result based on the output of mxGraphView.
 updateFixedTerminalPoint, which computes all connection points
 for edge-to-edge connections and constrained ports and vertices
-and stores them in state.absolutePoints. 
+and stores them in state.absolutePoints.
 
 - Routing directions are stored in the 'portConstraint' style.
 Possible values for this style horizontal and vertical. Note

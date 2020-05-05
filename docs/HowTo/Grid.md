@@ -158,7 +158,7 @@ On any exception
   {
     mxLog.show();
     mxLog.debug('Using background image');
-    
+
     container.style.backgroundImage = 'url(\'editors/images/grid.gif\')';
   }
 ```
@@ -173,7 +173,6 @@ Validate background
     repaintGrid();
   };
 ```
-
 
 Gets the default parent for inserting new cells. This is normally the first child of the root (ie. layer 0).
 

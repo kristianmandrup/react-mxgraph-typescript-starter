@@ -39,13 +39,13 @@ If state cell is a vertex
     if (graph.getModel().isVertex(state.cell)) {
 ```
 
-If state does not have a delete control, 
+If state does not have a delete control
 
 ```js
   if (state.deleteControl == null) {
 ```  
 
-Create and add delete control 
+Create and add delete control
 
 ```js
 var b = new mxRectangle(0, 0, deleteImage.width, deleteImage.height);
@@ -89,7 +89,7 @@ var getDeleteControlBounds = function(state) {
     var h = state.deleteControl.bounds.height / oldScale;
     var s = state.view.scale;
 
-    return (state.view.graph.getModel().isEdge(state.cell)) ? 
+    return (state.view.graph.getModel().isEdge(state.cell)) ?
       new mxRectangle(state.x + state.width / 2 - w / 2 * s,
         state.y + state.height / 2 - h / 2 * s, w * s, h * s)
       : new mxRectangle(state.x + state.width - w * s,

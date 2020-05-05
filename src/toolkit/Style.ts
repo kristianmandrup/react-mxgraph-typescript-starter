@@ -10,7 +10,6 @@ interface IStyleArgs {
   imageBorder?: string
   startSize?: number
   noLabel?: number
-  verticalLabelPosition?: string
   labelPosition?: string
 }
 
@@ -29,16 +28,16 @@ export class Style {
   _fillColor: string = ''
 
   constructor({strokeColor, edgeStyle, fillColor}: IStyleArgs) {
-    this.strokeColor = strokeColor
-    this.edgeStyle = edgeStyle
-    this.fillColor = fillColor
+    this.strokeColor = strokeColor || ''
+    this.edgeStyle = edgeStyle || ''
+    this.fillColor = fillColor || ''
   }
 
   set strokeColor(color: string) {
     this._strokeColor = color
   }
 
-  get strokeColor() {
+  get strokeColor(): string {
     return this._strokeColor
   }
 

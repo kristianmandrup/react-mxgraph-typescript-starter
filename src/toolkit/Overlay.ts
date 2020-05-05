@@ -6,7 +6,7 @@ const { mxCellOverlay, mxImage, mxEvent } = mxgraphFactory({
   mxLoadStylesheets: false,
 });
 
-export const createImageOverlay = (imagePath: string, size: ISize, {label, cursor}: {label: string, cursor: string}) {
+export const createImageOverlay = (imagePath: string, size: ISize, {label, cursor}: {label: string, cursor: string}) => {
   // Creates a new overlay with an image and a tooltip
   var overlay = new mxCellOverlay(new mxImage(imagePath, size.width, size.height), label)
   overlay.cursor = 'hand'

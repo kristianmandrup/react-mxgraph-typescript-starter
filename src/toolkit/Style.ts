@@ -6,7 +6,12 @@ interface IStyleArgs {
   image?: string
   verticalLabelPosition?: string
   verticalAlign?: string
+  imageBackground?: string
+  imageBorder?: string
+  startSize?: number
+  noLabel?: number
 }
+
 
 const addStyle = (acc, name, value) => {
   if (!value || value === '') return acc

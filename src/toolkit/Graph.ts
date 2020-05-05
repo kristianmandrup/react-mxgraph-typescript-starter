@@ -1,7 +1,8 @@
 import { mxgraphFactory } from "ts-mxgraph";
 import { DrawLayer } from './Layers';
+import { StyleSheet } from './Stylesheet';
 
-const { mxRubberband, mxKeyHandler, mxGraphModel, mxGraph } = mxgraphFactory({
+const { mxMorphing, mxEvent, mxCellState, mxRubberband, mxKeyHandler, mxGraphModel, mxGraph } = mxgraphFactory({
   mxLoadResources: false,
   mxLoadStylesheets: false,
 });
@@ -46,11 +47,38 @@ export class Graph {
   }
 
   get model() {
+    return this.graph.model
+  }
+
+  isPart(cell: any) {
+    this.graph.isPart(cell)
+  }
+
+  setFoldingEnabled(value: boolean) {
+    this.graph.foldingEnabled = value;
+  }
+
+  setRecursiveResizeEnabled(value: boolean) {
+    this.graph.recursiveResize = value;
+  }
+
+  getModel() {
     return this.graph.getModel()
   }
 
   draw(): DrawLayer {
     return new DrawLayer(this, this.defaultParent)
+  }
+
+  morph(onDone: () => void) {
+    var morph = new mxMorphing(this.graph);
+    morph.addListener(mxEvent.DONE, () => {
+      if (onDone != null) {
+        onDone();
+      }
+    });
+    
+    morph.startAnimation();    
   }
 
   beginUpdate() {
@@ -72,6 +100,18 @@ export class Graph {
     return this.graph.getDefaultParent();
   }
 
+  addCellOverlay(cell, overlay) {
+    this.graph.addCellOverlay(cell, overlay)
+  };
+
+  stopEditing(value: boolean) {
+    this.graph.stopEditing(value);
+  }
+  
+  hidePopupMenu() {
+    this.graph.popupMenuHandler.hideMenu();
+  }
+
   disableFolding() {
     this.graph.isCellFoldable = (cell) => false
   }
@@ -84,14 +124,21 @@ export class Graph {
     this.graph.setTooltips(value);
   }
 
-  get getStylesheet() {
+  get stylesheet() {
     return this.graph.getStylesheet()
   }
-  
-  get defaultEdgeStyle() {
-    return this.getStylesheet.getDefaultEdgeStyle();
+
+  withStylesheet() {
+    return new StyleSheet(this.stylesheet)
   }
-  
+
+  enableConnectPreview() {
+    this.graph.connectionHandler.createEdgeState = (me) => {
+      var edge = this.graph.createEdge(null, null, null, null, null);      
+      return new mxCellState(this.graph.view, edge, this.graph.getCellStyle(edge));
+    };
+  }
+
   setEnabled(value: boolean) {
     this.graph.setEnabled(value);
   }

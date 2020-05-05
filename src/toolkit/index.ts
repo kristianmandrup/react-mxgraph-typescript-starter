@@ -1,3 +1,4 @@
+export { StyleSheet } from './Stylesheet';
 export { Layers, DrawLayer } from './Layers';
 export { Style } from './Style';
 export { Vertex, PortPosition } from './Vertex';

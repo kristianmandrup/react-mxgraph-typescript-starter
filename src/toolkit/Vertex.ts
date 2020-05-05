@@ -37,6 +37,21 @@ export class Vertex {
     this.vertex = vertex
   }
 
+  setGeometry(geometry) {
+    this.vertex.geometry = geometry
+  }
+
+  addGeometry(geometry) {
+    this.vertex.geometry = {
+      ...this.vertex.geometry,
+      geometry
+    }
+  }
+
+  setAlternateBounds(boundsVertex) {
+    this.vertex.geometry.alternateBounds = boundsVertex
+  }
+
   insertPortVertex(pos: IPosition, size: ISize, {id, label}: any = {}) {
     const midX = -(size.width / 2)
     const midY = -(size.height / 2)

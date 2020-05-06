@@ -1,11 +1,7 @@
-import { mxgraphFactory } from "ts-mxgraph";
+import mx from "./mx";
 import { IGraph } from './Graph';
 import { IPosition, ISize } from './types';
-
-const { mxUtils, mxCell } = mxgraphFactory({
-  mxLoadResources: false,
-  mxLoadStylesheets: false,
-});
+const { mxUtils, mxCell } = mx
 
 export const setGeometryPoints = (cell: any, points?: any) => {
   if (points) {

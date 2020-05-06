@@ -1,9 +1,5 @@
-import { mxgraphFactory } from "ts-mxgraph";
-
-const { mxClient, mxVertexHandler, mxUtils, mxEvent } = mxgraphFactory({
-  mxLoadResources: false,
-  mxLoadStylesheets: false,
-});
+import mx from "./mx";
+const { mxClient, mxVertexHandler, mxUtils, mxEvent } = mx
 
 const noOp = () => {}
 

@@ -1,9 +1,5 @@
-import { mxgraphFactory } from "ts-mxgraph";
-
-const { mxEvent, mxUtils, mxGraph } = mxgraphFactory({
-  mxLoadResources: false,
-  mxLoadStylesheets: false,
-});
+import mx from "./mx";
+const { mxEvent, mxUtils, mxGraph } = mx
 
 export interface IRegionCalc {
   determine(point: any): string

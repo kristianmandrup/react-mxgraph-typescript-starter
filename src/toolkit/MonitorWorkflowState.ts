@@ -1,9 +1,5 @@
-import { mxgraphFactory } from "ts-mxgraph";
-
-const { mxEvent, mxCellOverlay, mxUtils, mxConstants } = mxgraphFactory({
-  mxLoadResources: false,
-  mxLoadStylesheets: false,
-});
+import mx from "./mx";
+const { mxEvent, mxCellOverlay, mxUtils, mxConstants } = mx
 
 export const states = mws => {
   const { graph } = mws

@@ -1,12 +1,8 @@
-import { mxgraphFactory } from "ts-mxgraph";
+import mx from "./mx";
 import { DrawLayer } from './Layers';
 import { StyleSheet } from './Stylesheet';
 import { VertexToolHandler } from './VertexToolHandler';
-
-const { mxEdgeHandler, mxGraphHandler, mxMorphing, mxEvent, mxCellState, mxRubberband, mxKeyHandler, mxGraphModel, mxGraph } = mxgraphFactory({
-  mxLoadResources: false,
-  mxLoadStylesheets: false,
-});
+const { mxEdgeHandler, mxGraphHandler, mxMorphing, mxEvent, mxCellState, mxRubberband, mxKeyHandler, mxGraphModel, mxGraph } = mx
 
 export const createGraphWithModel = (container: Element, model?: any) => {
   model = model || new mxGraphModel();

@@ -1,9 +1,5 @@
-import { mxgraphFactory } from "ts-mxgraph";
-
-const { mxUtils } = mxgraphFactory({
-  mxLoadResources: false,
-  mxLoadStylesheets: false,
-});
+import mx from "./mx";
+const { mxUtils } = mx
 
 export class UserObject {
   doc: any

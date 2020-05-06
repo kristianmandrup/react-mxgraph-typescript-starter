@@ -1,10 +1,6 @@
-import { mxgraphFactory } from "ts-mxgraph";
+import mx from "./mx";
 import { IPosition, ISize } from './types';
-
-const { mxPoint } = mxgraphFactory({
-  mxLoadResources: false,
-  mxLoadStylesheets: false,
-});
+const { mxPoint } = mx
 
 // 1,0: top right
 // 1,1: bottom right

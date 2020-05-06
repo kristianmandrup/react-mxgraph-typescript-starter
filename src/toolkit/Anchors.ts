@@ -1,9 +1,5 @@
-import { mxgraphFactory } from "ts-mxgraph";
-
-const { mxPolyline, mxConnectionConstraint, mxPoint, mxShape } = mxgraphFactory({
-  mxLoadResources: false,
-  mxLoadStylesheets: false,
-});
+import mx from "./mx";
+const { mxPolyline, mxConnectionConstraint, mxPoint, mxShape } = mx
 
 const ac = (x, y) => {
   return new mxConnectionConstraint(new mxPoint(x, y), true)

@@ -1,9 +1,5 @@
-import { mxgraphFactory } from "ts-mxgraph";
-
-const { mxConstants } = mxgraphFactory({
-  mxLoadResources: false,
-  mxLoadStylesheets: false,
-});
+import mx from "./mx";
+const { mxConstants } = mx
 
 export const shapeMap = {
   rectangle: mxConstants.SHAPE_RECTANGLE

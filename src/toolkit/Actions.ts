@@ -1,10 +1,6 @@
-import { mxgraphFactory } from "ts-mxgraph";
+import mx from "./mx";
 import { defaults } from './defaults';
-
-const { mxCodec, mxUtils } = mxgraphFactory({
-  mxLoadResources: false,
-  mxLoadStylesheets: false,
-});
+const { mxCodec, mxUtils } = mx
 
 const createExportModal = (graph, showModalWindow, props) => cell => {
   let { size, title } = props

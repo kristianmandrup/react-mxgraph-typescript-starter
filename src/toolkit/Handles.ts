@@ -1,9 +1,5 @@
-import { mxgraphFactory } from "ts-mxgraph";
-
-const { mxVertexHandler, mxPoint, mxHandle, mxUtils } = mxgraphFactory({
-  mxLoadResources: false,
-  mxLoadStylesheets: false,
-});
+import mx from "./mx";
+const { mxVertexHandler, mxPoint, mxHandle, mxUtils } = mx
 
 export class Handle {
   handle: any

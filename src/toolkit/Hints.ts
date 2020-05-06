@@ -1,9 +1,5 @@
-import { mxgraphFactory } from "ts-mxgraph";
-
-const { mxUtils } = mxgraphFactory({
-  mxLoadResources: false,
-  mxLoadStylesheets: false,
-});
+import mx from "./mx";
+const { mxUtils } = mx
 
 const createHintsElement = (): Element => {
   // Displays useful hints in a small semi-transparent box.

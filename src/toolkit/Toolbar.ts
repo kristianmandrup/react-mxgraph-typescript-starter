@@ -1,9 +1,5 @@
-import { mxgraphFactory } from "ts-mxgraph";
-
-const { mxEvent, mxUtils, mxGeometry, mxCell, mxToolbar } = mxgraphFactory({
-  mxLoadResources: false,
-  mxLoadStylesheets: false,
-});
+import mx from "./mx";
+const { mxEvent, mxUtils, mxGeometry, mxCell, mxToolbar } = mx
 
 type IaddToolbarItemFn = (graph: any, toolbar: any, cellPrototype: any, image: any) => void
 

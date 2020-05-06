@@ -1,9 +1,5 @@
-import { mxgraphFactory } from "ts-mxgraph";
-
-const { mxEvent, mxUtils, mxWindow, mxEffects } = mxgraphFactory({
-  mxLoadResources: false,
-  mxLoadStylesheets: false,
-});
+import mx from "./mx";
+const { mxEvent, mxUtils, mxWindow, mxEffects } = mx
 
 const isValidEvt = (evt) => !mxEvent.isConsumed(evt)
 const isValidCell = (graph, cell) => cell != null && graph.isCellEditable(cell)
@@ -12,15 +8,15 @@ const canOpenModal = (graph, evt, cell) =>
   graph.isEnabled() && isValidEvt(evt)  && isValidCell(graph, cell)
 
 export const showModalWindow = (graph, content, {title, size, background}) => {
-  var background = document.createElement('div');
-  background.style.position = 'absolute';
-  background.style.left = '0px';
-  background.style.top = '0px';
-  background.style.right = '0px';
-  background.style.bottom = '0px';
-  background.style.background = background || 'black';
+  const backElem = document.createElement('div');
+  backElem.style.position = 'absolute';
+  backElem.style.left = '0px';
+  backElem.style.top = '0px';
+  backElem.style.right = '0px';
+  backElem.style.bottom = '0px';
+  backElem.style.background = background || 'black';
   mxUtils.setOpacity(background, 50);
-  document.body.appendChild(background);
+  document.body.appendChild(backElem);
     
   const { width, height } = size
   const maxWidth = document.body.scrollWidth / 2 - width / 2

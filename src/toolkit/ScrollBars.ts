@@ -1,9 +1,5 @@
-import { mxgraphFactory } from "ts-mxgraph";
-
-const { mxConnectionHandler, mxPoint, mxEvent } = mxgraphFactory({
-  mxLoadResources: false,
-  mxLoadStylesheets: false,
-});
+import mx from "./mx";
+const { mxConnectionHandler, mxPoint, mxEvent } = mx
 
 export class ScrollableConnectionHandler {
   handler: any // mxConnectionHandler.prototype
@@ -22,7 +18,7 @@ export class ScrollableConnectionHandler {
   };  
 
   setTargetPerimeterPoint() {
-    this.handler.getTargetPerimeterPoint = this.mxConnectionHandler
+    this.handler.getTargetPerimeterPoint = this.targetPerimterPoint
   }
 
   // Overrides target perimeter point for connection previews
@@ -55,29 +51,27 @@ export class ScrollableConnectionHandler {
     // Overrides source perimeter point for connection previews
   getSourcePerimeterPoint(state, next, me) {
     const handler = this.handler
-      var y = me.getY();
+    var y = me.getY();
 
-      if (handler.sourceRowNode != null)
-      {
-        y = this.getRowY(state, handler.sourceRowNode);
-      }
+    if (handler.sourceRowNode != null) {
+      y = this.getRowY(state, handler.sourceRowNode);
+    }
 
-      // Checks on which side of the terminal to leave
-      var x = state.x;
+    // Checks on which side of the terminal to leave
+    var x = state.x;
       
-      if (next.x > state.getCenterX())
-      {
-        x += state.width;
-      }
+    if (next.x > state.getCenterX()) {
+      x += state.width;
+    }
 
-      return new mxPoint(x, y);
-    };
+    return new mxPoint(x, y);
+  }
 
-    // Disables connections to invalid rows
-    isValidTarget(cell) {
-      const handler = this.handler
-      return handler.currentRowNode != null;
-    };
+  // Disables connections to invalid rows
+  isValidTarget(cell) {
+    const handler = this.handler
+    return handler.currentRowNode != null;
+  }
 }
 
 export class ScrollableCellRenderer {
@@ -87,60 +81,60 @@ export class ScrollableCellRenderer {
 
   constructor(graph: any) {
     this.graph = graph
-    this.cellRenderer = graph.
-    this.oldRedrawLabel = graph.cellRenderer.redrawLabel;
+    this.cellRenderer = graph
+    .this.oldRedrawLabel = graph.cellRenderer.redrawLabel;
   }
 
   // Scroll events should not start moving the vertex
   isLabelEvent(state, evt) {
     var source = mxEvent.getSource(evt);
 
-    return state.text != null && source != state.text.node &&
-      source != state.text.node.getElementsByTagName('div')[0];
+    return state.text != null && source !== state.text.node &&
+      source !== state.text.node.getElementsByTagName('div')[0];
   };  
 
 
-// Adds scrollbars to the outermost div and keeps the
-// DIV position and size the same as the vertex
-redrawLabel(state) {
-  this.oldRedrawLabel.apply(this, arguments); // "supercall"
-  var graph = state.view.graph;
-  var model = graph.model;
+  // Adds scrollbars to the outermost div and keeps the
+  // DIV position and size the same as the vertex
+  redrawLabel(state) {
+    this.oldRedrawLabel.apply(this, arguments); // "supercall"
+    var graph = state.view.graph;
+    var model = graph.model;
 
-  if (model.isVertex(state.cell) && state.text != null) {
+    if (!(model.isVertex(state.cell) && state.text != null)) return
+
     // Scrollbars are on the div
     var s = graph.view.scale;
     state.text.node.style.overflow = 'hidden';
     var div = state.text.node.getElementsByTagName('div')[0];
     
-    if (div != null) {
-      // Adds height of the title table cell
-      var oh = 26;
+    if (div === null) return
 
-      div.style.display = 'block';
-      div.style.top = oh + 'px';
-      div.style.width = Math.max(1, Math.round(state.width / s)) + 'px';
-      div.style.height = Math.max(1, Math.round((state.height / s) - oh)) + 'px';
+    // Adds height of the title table cell
+    var oh = 26;
+
+    div.style.display = 'block';
+    div.style.top = oh + 'px';
+    div.style.width = Math.max(1, Math.round(state.width / s)) + 'px';
+    div.style.height = Math.max(1, Math.round((state.height / s) - oh)) + 'px';
+    
+    // Installs the handler for updating connected edges
+    if (div.scrollHandler !== null) return
+    div.scrollHandler = true;
+    
+    const updateEdges = () => {
+      const edgeCount = model.getEdgeCount(state.cell);
       
-      // Installs the handler for updating connected edges
-      if (div.scrollHandler == null) {
-        div.scrollHandler = true;
-        
-        const updateEdges = () => {
-          const edgeCount = model.getEdgeCount(state.cell);
-          
-          // Only updates edges to avoid update in DOM order
-          // for text label which would reset the scrollbar
-          for (var i = 0; i < edgeCount; i++) {
-            var edge = model.getEdgeAt(state.cell, i);
-            graph.view.invalidate(edge, true, false);
-            graph.view.validate(edge);
-          }
-        };
-        
-        mxEvent.addListener(div, 'scroll', updateEdges);
-        mxEvent.addListener(div, 'mouseup', updateEdges);
+      // Only updates edges to avoid update in DOM order
+      // for text label which would reset the scrollbar
+      for (var i = 0; i < edgeCount; i++) {
+        var edge = model.getEdgeAt(state.cell, i);
+        graph.view.invalidate(edge, true, false);
+        graph.view.validate(edge);
       }
-    }
+    };
+    
+    mxEvent.addListener(div, 'scroll', updateEdges);
+    mxEvent.addListener(div, 'mouseup', updateEdges);      
   }
 }

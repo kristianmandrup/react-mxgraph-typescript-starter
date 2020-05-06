@@ -1,10 +1,5 @@
-import { mxgraphFactory } from "ts-mxgraph";
-
-const { mxEvent } = mxgraphFactory({
-  mxLoadResources: false,
-  mxLoadStylesheets: false,
-});
-
+import mx from "./mx";
+const { mxEvent } = mx
 
 export class PopupMenu {
   graph: any
@@ -50,6 +45,7 @@ export class PopupMenu {
         const submenu = menu.addItem(sub.title, null, null);
         this.addItemsToMenu(menu, sub.items, submenu)
       }
+      return item
     })  
   }
 

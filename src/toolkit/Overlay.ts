@@ -1,10 +1,6 @@
-import { mxgraphFactory } from "ts-mxgraph";
+import mx from "./mx";
 import { ISize } from './types';
-
-const { mxCellOverlay, mxImage, mxEvent } = mxgraphFactory({
-  mxLoadResources: false,
-  mxLoadStylesheets: false,
-});
+const { mxCellOverlay, mxImage, mxEvent } = mx
 
 export const createImageOverlay = (imagePath: string, size: ISize, {label, cursor}: {label: string, cursor: string}) => {
   // Creates a new overlay with an image and a tooltip

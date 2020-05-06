@@ -1,9 +1,5 @@
-import { mxgraphFactory } from "ts-mxgraph";
-
-const { mxMarker } = mxgraphFactory({
-  mxLoadResources: false,
-  mxLoadStylesheets: false,
-});
+import mx from "./mx";
+const { mxMarker } = mx
 
 export const markers = {
   dash: (canvas, shape, type, pe, unitX, unitY, size, source, sw, filled) => {

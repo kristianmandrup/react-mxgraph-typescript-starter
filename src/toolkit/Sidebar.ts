@@ -1,10 +1,6 @@
-import { mxgraphFactory } from "ts-mxgraph";
+import mx from "./mx";
 import { IPosition, ISize } from './types';
-
-const { mxRectangle, mxPoint, mxUtils } = mxgraphFactory({
-  mxLoadResources: false,
-  mxLoadStylesheets: false,
-});
+const { mxRectangle, mxPoint, mxUtils } = mx
 
 const createPort = (graph, vertex, label, pos, size, imagePath, style, offset) => {
   // Adds the ports at various relative locations
@@ -60,6 +56,7 @@ const createOnDrag = (label, {createPorts, createVertex, vertexSize}) => (graph,
 }
 
 export interface IaddSidebarIcon {
+  vertexSize: ISize
   createPorts(graph: any, vertex: any)
   createVertex(graph: any, label: string, pos: IPosition, size?: ISize)
 }

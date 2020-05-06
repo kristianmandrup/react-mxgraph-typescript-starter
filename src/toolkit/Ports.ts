@@ -1,10 +1,6 @@
 import { ISize } from './types';
-import { mxgraphFactory } from "ts-mxgraph";
-
-const { mxConstants, mxPoint, mxConnectionConstraint, mxConstraintHandler, mxImage, mxShape } = mxgraphFactory({
-  mxLoadResources: false,
-  mxLoadStylesheets: false,
-});
+import mx from "./mx";
+const { mxConstants, mxPoint, mxConnectionConstraint, mxConstraintHandler, mxImage, mxShape } = mx
 
 interface IPorts {
   setPorts()

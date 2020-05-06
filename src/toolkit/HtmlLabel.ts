@@ -1,9 +1,5 @@
-import { mxgraphFactory } from "ts-mxgraph";
-
-const { mxEvent, mxClient, mxUtils, mxUndoManager } = mxgraphFactory({
-  mxLoadResources: false,
-  mxLoadStylesheets: false,
-});
+import mx from "./mx";
+const { mxEvent, mxClient, mxUtils, mxUndoManager } = mx
 
 export class HtmlLabel {
   graph: any

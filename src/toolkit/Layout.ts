@@ -1,9 +1,5 @@
-import { mxgraphFactory } from "ts-mxgraph";
-
-const { mxConstants, mxHierarchicalLayout, mxRadialTreeLayout, mxCircleLayout } = mxgraphFactory({
-  mxLoadResources: false,
-  mxLoadStylesheets: false,
-});
+import mx from "./mx";
+const { mxConstants, mxHierarchicalLayout, mxRadialTreeLayout, mxCircleLayout } = mx
 
 export enum EDirection {
   North,

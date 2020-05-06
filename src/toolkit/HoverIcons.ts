@@ -1,9 +1,5 @@
-import { mxgraphFactory } from "ts-mxgraph";
-
-const { mxRectangle, mxUtils, mxEvent } = mxgraphFactory({
-  mxLoadResources: false,
-  mxLoadStylesheets: false,
-});
+import mx from "./mx";
+const { mxRectangle, mxUtils, mxEvent } = mx
 
 export class Actions {
   graph: any

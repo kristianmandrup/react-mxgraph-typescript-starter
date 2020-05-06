@@ -45,7 +45,11 @@ export const styleMap = {
   image: mxConstants.STYLE_IMAGE,
   labelBackgroundColor: mxConstants.STYLE_LABEL_BACKGROUNDCOLOR,
   edge: mxConstants.STYLE_EDGE,  
-  shadow: mxConstants.STYLE_SHADOW
+  shadow: mxConstants.STYLE_SHADOW,
+  indicatorShape: mxConstants.STYLE_INDICATOR_SHAPE,
+  indicatorWidth: mxConstants.STYLE_INDICATOR_WIDTH,
+  indicatorHeight: mxConstants.STYLE_INDICATOR_HEIGHT,
+  indicatorColor: mxConstants.STYLE_INDICATOR_COLOR
 }
 
 export class StyleSheet {
@@ -58,6 +62,8 @@ export class StyleSheet {
   get defaultVertexStyle(): any {
     return this.stylesheet.getDefaultVertexStyle()
   }
+
+  // indicatorShape=actor;indicatorWidth=28;indicatorColor=blue
 
   // Usage:
   // setVertexStyle({

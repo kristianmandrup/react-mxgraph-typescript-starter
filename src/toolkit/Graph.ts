@@ -3,7 +3,7 @@ import { DrawLayer } from './Layers';
 import { StyleSheet } from './Stylesheet';
 import { VertexToolHandler } from './VertexToolHandler';
 
-const { mxMorphing, mxEvent, mxCellState, mxRubberband, mxKeyHandler, mxGraphModel, mxGraph } = mxgraphFactory({
+const { mxEdgeHandler, mxGraphHandler, mxMorphing, mxEvent, mxCellState, mxRubberband, mxKeyHandler, mxGraphModel, mxGraph } = mxgraphFactory({
   mxLoadResources: false,
   mxLoadStylesheets: false,
 });
@@ -89,6 +89,14 @@ export class Graph {
     return new DrawLayer(this, this.defaultParent)
   }
 
+  setGuidesEnabled(value: boolean) {
+    mxGraphHandler.prototype.guidesEnabled = true;
+  }
+  
+  setSnapToTerminals(value: boolean) {
+    mxEdgeHandler.prototype.snapToTerminals = value;
+  }
+  
   // Disables automatic handling of ports. This disables the reset of the
   // respective style in mxGraph.cellConnected. Note that this feature may
   // be useful if floating and fixed connections are combined.

@@ -24,7 +24,6 @@ const createExportModal = (graph, showModalWindow, props) => cell => {
   showModalWindow(graph, title, textarea, width + 10, height + 40);
 };
 
-
 export class Actions {
   editor: any
   showModalWindow: any

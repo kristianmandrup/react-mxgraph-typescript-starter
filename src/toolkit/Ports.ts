@@ -12,7 +12,7 @@ interface IPorts {
 
 export class BasePorts {
   // ... except for triangles
-  ports = new Array();
+  ports = [];
 
   setShapePorts() {
     // Extends shapes classes to return their ports
@@ -38,7 +38,7 @@ export class ShapePorts extends BasePorts {
 
   // ... except for triangles
 export class TrianglePorts extends BasePorts implements IPorts {
-  ports = new Array();
+  ports = [];
 
   setPorts() {
     this.inPorts()
@@ -84,7 +84,7 @@ export class Ports {
   setConnectionPort() {
     const { graph } = this
     // Sets the port for the given connection
-    graph.setConnectionConstraint = (edge, terminal, source, constraint) {
+    graph.setConnectionConstraint = (edge, terminal, source, constraint) => {
       if (constraint != null) {
         const key = (source) ? mxConstants.STYLE_SOURCE_PORT : mxConstants.STYLE_TARGET_PORT;        
         if (constraint == null || constraint.id == null) {
@@ -134,35 +134,36 @@ export class Ports {
   }
   
   setupRetrieveTerminalPorts() {
-  const { graph } = this
-  // Returns all possible ports for a given terminal
-  graph.getAllConnectionConstraints = (terminal, source) => {
-    if (terminal != null && terminal.shape != null &&
-      terminal.shape.stencil != null) {
-      // for stencils with existing constraints...
-      if (terminal.shape.stencil != null) {
-        return terminal.shape.stencil.constraints;
-      }
-    }
-    else if (terminal != null && graph.model.isVertex(terminal.cell)) {
-      if (terminal.shape != null) {
-        var ports = terminal.shape.getPorts();
-        var cstrs = new Array();
-        
-        for (var id in ports)
-        {
-          var port = ports[id];
-          
-          var cstr = new mxConnectionConstraint(new mxPoint(port.x, port.y), port.perimeter);
-          cstr['id'] = id;
-          cstrs.push(cstr);
+    const { graph } = this
+    // Returns all possible ports for a given terminal
+    graph.getAllConnectionConstraints = (terminal, source) => {
+      if (terminal != null && terminal.shape != null &&
+        terminal.shape.stencil != null) {
+        // for stencils with existing constraints...
+        if (terminal.shape.stencil != null) {
+          return terminal.shape.stencil.constraints;
         }
-        
-        return cstrs;
+      } else if (terminal != null && graph.model.isVertex(terminal.cell)) {
+        if (terminal.shape != null) {
+          var ports = terminal.shape.getPorts();
+          var cstrs = [];
+          
+          for (var id in ports) {
+            const port = ports[id];
+            this.forTerminalPort(cstrs, port, id)
+          }
+          
+          return cstrs;
+        }
       }
+      
+      return null;
     }
-    
-    return null;
-  };  
+  }
+
+  forTerminalPort(cstrs, port, id) {
+    const cstr = new mxConnectionConstraint(new mxPoint(port.x, port.y), port.perimeter);
+    cstr['id'] = id;
+    cstrs.push(cstr);
   }
 }

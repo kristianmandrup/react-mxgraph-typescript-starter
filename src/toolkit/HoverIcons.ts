@@ -1,6 +1,6 @@
 import { mxgraphFactory } from "ts-mxgraph";
 
-const { mxRectangle, mxUtils, mxEvent, mxIconSet } = mxgraphFactory({
+const { mxRectangle, mxUtils, mxEvent } = mxgraphFactory({
   mxLoadResources: false,
   mxLoadStylesheets: false,
 });
@@ -38,8 +38,8 @@ export class HoverVertexListener {
   currentIconSet: any = null
   graph: any
 
-  constructor(graph: any) {
-    this.graph = graph
+  constructor(graph: any, state: any) {
+    this.graph = graph || state.view.graph
   }
 
   mouseDown(sender, me) {
@@ -52,7 +52,7 @@ export class HoverVertexListener {
 
   mouseMove(sender, me) {
     const { graph } = this
-    if (this.currentState != null && (me.getState() == this.currentState ||
+    if (this.currentState !== null && (me.getState() === this.currentState ||
       me.getState() == null)) {
       const tol = this.iconTolerance;
       const tmp = new mxRectangle(me.getGraphX() - tol,
@@ -84,8 +84,9 @@ export class HoverVertexListener {
   mouseUp(sender, me) { }
 
   dragEnter(evt, state) {
+    // const { graph } = this
     if (this.currentIconSet == null) {
-      this.currentIconSet = new mxIconSet(state);
+      this.currentIconSet = new HoverVertexListener(null, state);
     }
   }
 
@@ -100,8 +101,6 @@ export class HoverVertexListener {
     const { graph } = this
     // Shows icons if the mouse is over a cell
     graph.addMouseListener({
-      currentState: null,
-      currentIconSet: null,
       mouseDown: this.mouseDown,
       mouseMove: this.mouseMove,
       mouseUp: this.mouseUp,

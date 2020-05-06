@@ -1,4 +1,3 @@
-import { HoverVertexListener } from './HoverIcons';
 export { createImageOverlay, Overlay } from './Overlay';
 export { StyleSheet } from './Stylesheet';
 export { Layers, DrawLayer } from './Layers';
@@ -26,4 +25,6 @@ export { ScrollableConnectionHandler, ScrollableCellRenderer } from './ScrollBar
 export { PopupMenu } from './PopupMenu'
 export { Ports, TrianglePorts, ShapePorts, BasePorts } from './Ports'
 export { Handles } from './Handles'
+export { HoverStyle } from './HoverStyle'
 export { HoverIcons, HoverVertexListener } from './HoverIcons'
+export { UserObject } from './UserObject'

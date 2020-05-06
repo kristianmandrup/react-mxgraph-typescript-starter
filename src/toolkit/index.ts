@@ -22,3 +22,4 @@ export { AnchorPositions, createAnchorContraint, disableEdgeConstraints, setShap
 export { Sidebar } from './Sidebar'
 export { SplashScreen } from './SplashScreen'
 export { ScrollableConnectionHandler, ScrollableCellRenderer } from './ScrollBars'
+export { PopupMenu } from './PopupMenu'

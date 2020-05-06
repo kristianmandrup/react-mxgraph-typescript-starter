@@ -63,6 +63,24 @@ export class TrianglePorts extends BasePorts implements IPorts {
   }  
 }
 
+
+const createPortConnectionPointApi = (constraint: any, vertex) => {
+  const { id } = constraint
+  return {
+    isValid: (): boolean => {
+      return id != null && vertex != null && vertex.shape != null
+    },  
+    getPort: (): any => {
+      const ports = vertex.shape.getPorts()
+      return ports[id];
+    },
+    createConstraint: (port): any => {
+      return new mxConnectionConstraint(new mxPoint(port.x, port.y), port.perimeter);
+    }
+  }    
+}
+
+
 export class Ports {
   graph: any
   handler: any // mxConstraintHandler.prototype
@@ -83,16 +101,12 @@ export class Ports {
 
   setConnectionPort() {
     const { graph } = this
+    const getKey = (source) => source ? mxConstants.STYLE_SOURCE_PORT : mxConstants.STYLE_TARGET_PORT;
     // Sets the port for the given connection
     graph.setConnectionConstraint = (edge, terminal, source, constraint) => {
       if (constraint != null) {
-        const key = (source) ? mxConstants.STYLE_SOURCE_PORT : mxConstants.STYLE_TARGET_PORT;        
-        if (constraint == null || constraint.id == null) {
-          graph.setCellStyles(key, null, [edge]);
-        }
-        else if (constraint.id != null) {
-          graph.setCellStyles(key, constraint.id, [edge]);
-        }
+        const key = getKey(source)
+        graph.setCellStyles(key, constraint.id, [edge])
       }
     };
   }
@@ -112,17 +126,23 @@ export class Ports {
     };
   }
 			
-  portConnectionPoint() {
+  portConnectionPoint(createApi) {
+    createApi = createApi || createPortConnectionPointApi
+
+    const portConstaint = (api) => {
+      if (!api.isValid()) return
+      const port = api.getPort()
+      if (port) {
+        return api.createConstraint(port)
+      }  
+    }
+
     // Returns the actual point for a port by redirecting the constraint to the port
     const graphGetConnectionPoint = this.graph.getConnectionPoint;
     this.graph.getConnectionPoint = (vertex, constraint) => {
-      if (constraint.id != null && vertex != null && vertex.shape != null) {
-        const port = vertex.shape.getPorts()[constraint.id];        
-        if (port != null) {
-          constraint = new mxConnectionConstraint(new mxPoint(port.x, port.y), port.perimeter);
-        }
-      }      
-      return graphGetConnectionPoint.apply(this, arguments);
+      const api = createApi(constraint, vertex)
+      constraint = portConstaint(api) || constraint
+      return graphGetConnectionPoint(vertex, constraint);
     };  
   }
 
@@ -133,37 +153,31 @@ export class Ports {
     };
   }
   
+  // define graph.getAllConnectionConstraints so it returns all 
+  // possible ports for a given terminal
   setupRetrieveTerminalPorts() {
     const { graph } = this
+
+    const isValidTerminal = (terminal) =>
+      terminal != null && terminal.shape != null && terminal.shape.stencil != null
+
+    const isVertextTerminal = (terminal) => terminal != null && graph.model.isVertex(terminal.cell)
+    const portConstraint = (port) => new mxConnectionConstraint(new mxPoint(port.x, port.y), port.perimeter);
+
     // Returns all possible ports for a given terminal
     graph.getAllConnectionConstraints = (terminal, source) => {
-      if (terminal != null && terminal.shape != null &&
-        terminal.shape.stencil != null) {
+      if (isValidTerminal(terminal)) {
         // for stencils with existing constraints...
-        if (terminal.shape.stencil != null) {
-          return terminal.shape.stencil.constraints;
-        }
-      } else if (terminal != null && graph.model.isVertex(terminal.cell)) {
-        if (terminal.shape != null) {
-          var ports = terminal.shape.getPorts();
-          var cstrs = [];
-          
-          for (var id in ports) {
-            const port = ports[id];
-            this.forTerminalPort(cstrs, port, id)
-          }
-          
-          return cstrs;
-        }
+        return terminal.shape.stencil.constraints;        
+      } 
+      if (isVertextTerminal(terminal) && terminal.shape) {
+        var ports = terminal.shape.getPorts();
+        return Object.keys(ports).map(id => {
+          return portConstraint(ports[id])
+        })
       }
       
       return null;
     }
-  }
-
-  forTerminalPort(cstrs, port, id) {
-    const cstr = new mxConnectionConstraint(new mxPoint(port.x, port.y), port.perimeter);
-    cstr['id'] = id;
-    cstrs.push(cstr);
   }
 }

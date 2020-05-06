@@ -1,6 +1,6 @@
 import { mxgraphFactory } from "ts-mxgraph";
 
-const { mxConstants, mxHierarchicalLayout } = mxgraphFactory({
+const { mxConstants, mxHierarchicalLayout, mxRadialTreeLayout, mxCircleLayout } = mxgraphFactory({
   mxLoadResources: false,
   mxLoadStylesheets: false,
 });
@@ -33,6 +33,20 @@ export class Layout {
   constructor(graph: any) {
     this.graph = graph
   }
+
+  radial() {
+    const layout = new mxRadialTreeLayout(this.graph)
+    this.layout = layout
+    return layout
+  }
+  
+  circle(radius?: number) {
+    const layout = new mxCircleLayout(this.graph, radius)
+    this.layout = layout
+    return layout
+  }
+
+  
 
   hierarchical(direction: TDirection) {
     const layout = new mxHierarchicalLayout(this.graph, dirMap[direction]);

@@ -45,6 +45,7 @@ export const styleMap = {
   image: mxConstants.STYLE_IMAGE,
   labelBackgroundColor: mxConstants.STYLE_LABEL_BACKGROUNDCOLOR,
   edge: mxConstants.STYLE_EDGE,  
+  shadow: mxConstants.STYLE_SHADOW
 }
 
 export class StyleSheet {

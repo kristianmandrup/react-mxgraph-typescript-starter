@@ -5,14 +5,23 @@ const { mxGraph } = mxgraphFactory({
   mxLoadStylesheets: false,
 });
 
-export const createIsConstituent = graph => cell => {
-	return graph.getCurrentCellStyle(cell)['constituent'] === '1';
-};
+export class Cell {
+  graph: any
 
-export const redirectSelectionToParent = graph => cell => {
-  if (graph.isPart(cell))
-  {
-    cell = graph.model.getParent(cell);
-  }  
-  mxGraph.prototype.selectCellForEvent(cell);
-};
+  constructor(graph: any) {
+    this.graph = graph
+  }
+
+  createIsConstituent(cell) {
+    return this.graph.getCurrentCellStyle(cell)['constituent'] === '1';
+  };
+  
+  redirectSelectionToParent(cell) {
+    const { graph } = this
+    if (graph.isPart(cell))
+    {
+      cell = graph.model.getParent(cell);
+    }  
+    mxGraph.prototype.selectCellForEvent(cell);
+  };
+}

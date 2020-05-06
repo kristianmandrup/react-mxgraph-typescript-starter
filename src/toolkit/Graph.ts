@@ -1,7 +1,7 @@
 import { mxgraphFactory } from "ts-mxgraph";
 import { DrawLayer } from './Layers';
 import { StyleSheet } from './Stylesheet';
-import { VertexToolHandler } from './ContextIcon';
+import { VertexToolHandler } from './VertexToolHandler';
 
 const { mxMorphing, mxEvent, mxCellState, mxRubberband, mxKeyHandler, mxGraphModel, mxGraph } = mxgraphFactory({
   mxLoadResources: false,
@@ -63,6 +63,22 @@ export class Graph {
 
   setRecursiveResizeEnabled(value: boolean) {
     this.graph.recursiveResize = value;
+  }
+
+  setCellsDisconnectable(value: boolean) {
+    this.graph.setCellsDisconnectable(value);
+  }
+
+  setAllowDanglingEdges(value: boolean) {
+    this.graph.setAllowDanglingEdges(value);
+  }
+
+  setCellsEditable(value: boolean) {
+    this.graph.setCellsEditable(value);
+  }
+  
+  setCenterZoom(value: boolean) {
+    this.graph.centerZoom = value;
   }
 
   getModel() {

@@ -3,7 +3,7 @@ export { StyleSheet } from './Stylesheet';
 export { Layers, DrawLayer } from './Layers';
 export { Style } from './Style';
 export { Vertex, PortPosition } from './Vertex';
-export { Toolbar, ToolbarItem, createToolbarForElement, createToolbar, createToolbarDOMElement } from "./Toolbar";
+export { Toolbar, ToolbarItem } from "./Toolbar";
 export { Graph, createGraphWithModel, createGraphDOMElement } from './Graph'
 export { IPosition, ISize } from './types'
 export { Hints } from './Hints'
@@ -18,8 +18,9 @@ export { Drop } from './Drop'
 export { Actions } from './Actions'
 export { Model } from './Model'
 export { Outline } from './Outline'
-export { AnchorPositions, createAnchorContraint, disableEdgeConstraints, setShapeConstraints } from './Anchors'
+export { AnchorPositions, Anchor } from './Anchors'
 export { Sidebar } from './Sidebar'
 export { SplashScreen } from './SplashScreen'
 export { ScrollableConnectionHandler, ScrollableCellRenderer } from './ScrollBars'
 export { PopupMenu } from './PopupMenu'
+export { Ports, TrianglePorts, ShapePorts, BasePorts } from './Ports'

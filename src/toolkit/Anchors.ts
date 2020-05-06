@@ -9,13 +9,21 @@ const ac = (x, y) => {
   return new mxConnectionConstraint(new mxPoint(x, y), true)
 }
 
-export const createAnchorContraint = ac
+export class Anchor {
+  static createContraint(x, y) {
+    return ac(x, y)
+  }
 
-// edges normally have no anchor constraints
-export const disableEdgeConstraints = () => mxPolyline.prototype['constraints'] = null;
+  // apply for all shapes   
+  setShapeConstraints(constraints) {
+    mxShape.prototype['constraints'] = constraints
+  }
 
-// apply for all shapes
-export const setShapeConstraints = (constraints) => mxShape.prototype['constraints'] = constraints
+  // edges normally have no anchor constraints  
+  disableEdgeConstraints() {
+    mxPolyline.prototype['constraints'] = null;
+  }
+}
 
 export class AnchorPositions {
   north = [

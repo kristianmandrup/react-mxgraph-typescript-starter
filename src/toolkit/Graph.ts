@@ -89,6 +89,17 @@ export class Graph {
     return new DrawLayer(this, this.defaultParent)
   }
 
+  // Disables automatic handling of ports. This disables the reset of the
+  // respective style in mxGraph.cellConnected. Note that this feature may
+  // be useful if floating and fixed connections are combined.
+  disableAutoPorts() {
+    this.setPortsEnabled(false);
+  }
+
+  setPortsEnabled(value: boolean) {
+    this.graph.setPortsEnabled(value);
+  }
+
   morph(onDone: () => void) {
     var morph = new mxMorphing(this.graph);
     morph.addListener(mxEvent.DONE, () => {

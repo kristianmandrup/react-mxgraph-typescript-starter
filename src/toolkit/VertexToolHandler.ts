@@ -64,7 +64,7 @@ export class VertexToolHandler {
   redrawTools() {
     if (this.state != null && this.domNode != null)
     {
-      var dy = (mxClient.IS_VML && document.compatMode == 'CSS1Compat') ? 20 : 4;
+      var dy = (mxClient.IS_VML && document.compatMode === 'CSS1Compat') ? 20 : 4;
       this.domNode.style.left = (this.state.x + this.state.width - 56) + 'px';
       this.domNode.style.top = (this.state.y + this.state.height + dy) + 'px';
     }

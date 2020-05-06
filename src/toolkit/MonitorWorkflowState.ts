@@ -5,7 +5,7 @@ const { mxEvent, mxCellOverlay, mxUtils, mxConstants } = mxgraphFactory({
   mxLoadStylesheets: false,
 });
 
-const states = mws => {
+export const states = mws => {
   const { graph } = mws
   return {
     running: (state, cell) => {
@@ -84,12 +84,19 @@ export class MonitorWorkflowState {
     const model = graph.getModel();
 
     const id = node.getAttribute('id');
-    const state = node.getAttribute('state');
-    
+    const state = node.getAttribute('state');    
     // Gets the cell for the given activity name from the model
     var cell = model.getCell(id);  
     // Updates the cell color and adds some tooltip information
     if (cell === null) return
+
+    // Resets the fillcolor and the overlay
+    this.resetOverlay(cell)
+    this.processStates(state, cell)
+  }
+
+  resetOverlay(cell) {
+    const { graph } = this
     // Resets the fillcolor and the overlay
     graph.setCellStyles(mxConstants.STYLE_FILLCOLOR, 'white', [cell]);
     graph.removeCellOverlays(cell);
@@ -99,7 +106,7 @@ export class MonitorWorkflowState {
     const { states } = this
     Object.keys(states).map(key => {
       const stateFn = states[key]
-      stateFn(state, cell)
+      return stateFn(state, cell)
     })
   }
 }

@@ -5,7 +5,7 @@ const { mxEditor } = mxgraphFactory({
   mxLoadStylesheets: false,
 });
 
-const getElem = (id) => document.getElementById(id),
+const getElem = (id) => document.getElementById(id)
 
 export class Editor {
   editor: any
@@ -36,18 +36,5 @@ export class Editor {
 
   configure(config) {
     this.editor.configure(config)
-  }
-
-  group(cell) {
-    const { editor } = this
-    cell = cell || editor.graph.getSelectionCell();
-    if (cell != null && editor.graph.isSwimlane(cell))
-    {
-      editor.execute('ungroup', cell);
-    }
-    else
-    {
-      editor.execute('group');
-    }
   }
 }

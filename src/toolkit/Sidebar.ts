@@ -1,5 +1,5 @@
 import { mxgraphFactory } from "ts-mxgraph";
-import { IPosition } from './types';
+import { IPosition, ISize } from './types';
 
 const { mxRectangle, mxPoint, mxUtils } = mxgraphFactory({
   mxLoadResources: false,
@@ -15,20 +15,25 @@ const createPort = (graph, vertex, label, pos, size, imagePath, style, offset) =
 }
 
 // sample: createPorts
-const createPorts = (graph, v1) => {
+export const createPorts = (graph, v1) => {
     // Adds the ports at various relative locations
     createPort(graph, v1, 'Trigger', {x: 0, y: 0.25}, {width: 16, height: 16},
         'editors/images/overlays/flash.png', 'align=right;imageAlign=right;spacingRight=18;', {x: -6, y: -8})
 }
 
 // sample: createVertex
-const createVertex = (graph, label, pos) => {
+export const createVertex = (graph, label, pos, size: any = {}) => {
   // NOTE: For non-HTML labels the image must be displayed via the style
   // rather than the label markup, so use 'image=' + image for the style.
   // as follows: v1 = graph.insertVertex(parent, null, label,
   // pt.x, pt.y, 120, 120, 'image=' + image);
   var parent = graph.getDefaultParent();
-  const vertex = graph.insertVertex(parent, null, label, pos.x, pos.y, 120, 120);
+  size = {
+    ...size,
+    width: 120,
+    height: 120
+  }
+  const vertex = graph.insertVertex(parent, null, label, pos.x, pos.y, size.width, size.height);
   vertex.setConnectable(false);
   
   // Presets the collapsed size
@@ -36,11 +41,11 @@ const createVertex = (graph, label, pos) => {
   return vertex
 }
 
-const createOnDrag = (label, {createPorts, createVertex}) => (graph, evt, cell, x, y) => {
+const createOnDrag = (label, {createPorts, createVertex, vertexSize}) => (graph, evt, cell, x, y) => {
   
   var model = graph.getModel();
   
-  const v1 = createVertex(graph, label, {x, y});
+  const v1 = createVertex(graph, label, {x, y, size: vertexSize});
   
   model.beginUpdate();
   try {
@@ -56,11 +61,20 @@ const createOnDrag = (label, {createPorts, createVertex}) => (graph, evt, cell, 
 
 export interface IaddSidebarIcon {
   createPorts(graph: any, vertex: any)
-  createVertex(graph: any, label: string, pos: IPosition)
+  createVertex(graph: any, label: string, pos: IPosition, size?: ISize)
+}
+
+export const defaultDragElement = () => {
+  const dragElt = document.createElement('div');
+  dragElt.style.border = 'dashed black 1px';
+  dragElt.style.width = '120px';
+  dragElt.style.height = '120px';
+  return dragElt
 }
 
 export class Sidebar {
   sidebar: any
+  _dragElt: Element = defaultDragElement()
 
   constructor(sidebar: any) {
     this.sidebar = sidebar
@@ -88,5 +102,18 @@ export class Sidebar {
     // Creates the image which is used as the drag icon (preview)
     var ds = mxUtils.makeDraggable(img, graph, onDrag, dragElt, 0, 0, true, true);
     ds.setGuidesEnabled(true);
-  }  
+  } 
+  
+  set dragElement(element: Element) {
+    this._dragElt = element
+  }
+
+  get dragElement() {
+    this._dragElt = this._dragElt || defaultDragElement()
+    return this._dragElt
+  }
+
+  defaultDragElement() {
+    return defaultDragElement()
+  }
 }

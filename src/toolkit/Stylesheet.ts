@@ -5,6 +5,23 @@ const { mxConstants } = mxgraphFactory({
   mxLoadStylesheets: false,
 });
 
+export const shapeMap = {
+  rectangle: mxConstants.SHAPE_RECTANGLE
+}
+
+export const alignMap = {
+  left: mxConstants.ALIGN_LEFT,
+  center: mxConstants.ALIGN_CENTER,
+  right: mxConstants.ALIGN_LEFT  
+}
+
+export const verticalAlignMap = {
+  top: mxConstants.ALIGN_TOP,
+  middle: mxConstants.ALIGN_MIDDLE,
+  bottom: mxConstants.ALIGN_BOTTOM
+}  
+
+
 export const styleMap = {
   rounded: mxConstants.STYLE_ROUNDED,
   fillColor: mxConstants.STYLE_FILLCOLOR,
@@ -12,7 +29,22 @@ export const styleMap = {
   strokeWidth: mxConstants.STYLE_STROKEWIDTH,
   fontColor: mxConstants.STYLE_FONTCOLOR,
   fontSize: mxConstants.STYLE_FONTSIZE,
-  fontStyle: mxConstants.STYLE_FONTSTYLE  
+  fontStyle: mxConstants.STYLE_FONTSTYLE,
+  shape: mxConstants.STYLE_SHAPE,
+  perimeter: mxConstants.STYLE_PERIMETER,
+  align: mxConstants.STYLE_ALIGN,
+  verticalAlign: mxConstants.STYLE_VERTICAL_ALIGN,
+  gradientColor: mxConstants.STYLE_GRADIENTCOLOR,
+  opacity: mxConstants.STYLE_OPACITY,
+  imageWidth: mxConstants.STYLE_IMAGE_WIDTH,
+  imageHeight: mxConstants.STYLE_IMAGE_HEIGHT,
+  imageBackground: mxConstants.STYLE_IMAGE_BACKGROUND,
+  imageAlign: mxConstants.STYLE_IMAGE_ALIGN,
+  imageVerticalAlign: mxConstants.STYLE_IMAGE_VERTICAL_ALIGN,
+  spacingTop: mxConstants.STYLE_SPACING_TOP,
+  image: mxConstants.STYLE_IMAGE,
+  labelBackgroundColor: mxConstants.STYLE_LABEL_BACKGROUNDCOLOR,
+  edge: mxConstants.STYLE_EDGE,  
 }
 
 export class StyleSheet {

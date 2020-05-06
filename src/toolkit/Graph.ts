@@ -2,7 +2,6 @@ import { mxgraphFactory } from "ts-mxgraph";
 import { DrawLayer } from './Layers';
 import { StyleSheet } from './Stylesheet';
 import { VertexToolHandler } from './ContextIcon';
-import { Graph } from './Graph';
 
 const { mxMorphing, mxEvent, mxCellState, mxRubberband, mxKeyHandler, mxGraphModel, mxGraph } = mxgraphFactory({
   mxLoadResources: false,
@@ -41,11 +40,13 @@ export const createIsPort = graph => (cell) => {
 
 export class Graph {
   graph: any
+  editor: any
   _rubberband: any
   _keyHandler: any
 
-  constructor(graph: any) {
+  constructor(graph: any, editor?: any) {
     this.graph = graph
+    this.editor = editor
   }
 
   get model() {

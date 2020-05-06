@@ -1,6 +1,6 @@
 import { mxgraphFactory } from "ts-mxgraph";
 
-const { mxEvent } = mxgraphFactory({
+const { mxEvent, mxUtils, mxWindow, mxEffects } = mxgraphFactory({
   mxLoadResources: false,
   mxLoadStylesheets: false,
 });
@@ -10,6 +10,37 @@ const isValidCell = (graph, cell) => cell != null && graph.isCellEditable(cell)
 
 const canOpenModal = (graph, evt, cell) =>
   graph.isEnabled() && isValidEvt(evt)  && isValidCell(graph, cell)
+
+export const showModalWindow = (graph, content, {title, size, background}) => {
+  var background = document.createElement('div');
+  background.style.position = 'absolute';
+  background.style.left = '0px';
+  background.style.top = '0px';
+  background.style.right = '0px';
+  background.style.bottom = '0px';
+  background.style.background = background || 'black';
+  mxUtils.setOpacity(background, 50);
+  document.body.appendChild(background);
+    
+  const { width, height } = size
+  const maxWidth = document.body.scrollWidth / 2 - width / 2
+  const x = Math.max(0, maxWidth);
+  const maxHeight = (document.body.scrollHeight || document.documentElement.scrollHeight) / 2-height * 2/3;
+  const y = Math.max(10, maxHeight);
+  const wnd = new mxWindow(title, content, x, y, width, height, false, true);
+  wnd.setClosable(true);
+  
+  // Fades the background out after after the window has been closed
+  wnd.addListener(mxEvent.DESTROY, (evt) => {
+    graph.setEnabled(true);
+    mxEffects.fadeOut(background, 50, true, 
+      10, 30, true);
+  });
+
+  graph.setEnabled(false);
+  graph.tooltipHandler.hide();
+  wnd.setVisible(true);
+};
 
 export class ModalWindow {
   graph: any

@@ -24,6 +24,8 @@ export const createGraphDOMElement = ({left, top}: {left: number, top: number} =
   return container
 }
 
+type IsCellVisibleFn = (cell: any) => boolean
+
 export interface IGraph {
   graph: any
   model: any
@@ -56,12 +58,29 @@ export class Graph {
     this.graph.isPart(cell)
   }
 
+  setDropEnabled(value: boolean) {
+    this.graph.setDropEnabled(value)
+  }
+
+  setSplitEnabled(value: boolean) {
+    this.graph.setSplitEnabled(value)
+  }
+
   setVisibilityDetailLevel() {
     const { graph } = this
     graph.isCellVisible = (cell) => {
       const inView = () => cell.lod / 2 < graph.view.scale;
       return !cell.lod || inView();
     };  
+  }
+
+  setResizeContainer(value: boolean) {
+    this.graph.setResizeContainer(value)
+  }
+
+  setIsCellVisible(isCellVisible: IsCellVisibleFn) {
+    const { graph } = this
+    graph.isCellVisible = isCellVisible
   }
 
   setAllowLoops(value: boolean) {
@@ -170,6 +189,16 @@ export class Graph {
 
   setTooltips(value: boolean) {
     this.graph.setTooltips(value);
+  }
+
+  setGetToolTipFn(getTooltipFn: (state) => any) {
+    const { graph } = this
+    this.graph.getTooltip = getTooltipFn.bind(graph)
+  }
+
+  setGetLabelFn(getLabelFn: (cell) => any) {
+    const { graph } = this
+    this.graph.getLabel = getLabelFn.bind(graph)
   }
 
   get stylesheet() {

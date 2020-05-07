@@ -65,7 +65,6 @@ export class ConnectorShape {
     }
   }
 
-
   get offSets() {
     return {
       y: [2, 22, 42, 62],
@@ -106,10 +105,10 @@ export class ConnectorShape {
     return vProto
   }
 
-  connector(value: string, props: OffsetParams = {}) {
+  connector(valueOrLabel: string, props: OffsetParams = {}) {
     const { vertex, vProto } = this
     var vconn = vProto.clone();
-    vconn.value = value;
+    vconn.value = valueOrLabel;
     const pos = this.calcPos(vProto, props)
     const { direction } = props
     const style = this.connectorStyle(direction)
@@ -118,7 +117,7 @@ export class ConnectorShape {
     vertex.insert(vconn);  
   }
 
-  centerConnector(props: CenterConnParams = {}) {
+  centerConnector(valueOrLabel: any, props: CenterConnParams = {}) {
     const { vertex, vProto } = this
     let { offSet, size, pos } = props
     size = {
@@ -133,7 +132,7 @@ export class ConnectorShape {
     } 
 
     var vconn = vProto.clone();
-    vconn.value = 'clk';
+    vconn.value = valueOrLabel;
     vconn.geometry.x = pos.x;
     vconn.geometry.y = pos.y;
     vconn.geometry.width = size.width;

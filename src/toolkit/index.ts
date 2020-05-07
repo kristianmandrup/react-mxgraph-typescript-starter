@@ -33,6 +33,10 @@ export { Markers } from './Markers'
 export { MonitorWorkflowState } from './MonitorWorkflowState'
 export { VertexHandler } from './VertexHandler'
 export { Window } from './Window'
+export { Swimlanes } from './Swimlanes'
+export { SecondLabel } from './SecondLabel'
+export { Rubberband } from './Rubberband'
+export { Connection } from './Connection'
 export { 
   MessageShape, 
   LinkShape, 

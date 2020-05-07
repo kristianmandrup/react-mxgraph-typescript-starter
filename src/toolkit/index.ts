@@ -37,6 +37,8 @@ export { Swimlanes, SwimlaneLayout, SwimlaneLayoutManager } from './Swimlanes'
 export { SecondLabel } from './SecondLabel'
 export { Rubberband } from './Rubberband'
 export { Connection } from './Connection'
+export { Guides } from './Guides'
+export { Animation } from './Animation'
 export { 
   MessageShape, 
   LinkShape, 

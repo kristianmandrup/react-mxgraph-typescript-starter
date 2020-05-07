@@ -1,11 +1,16 @@
 import mx from "./mx";
-const { mxGraph } = mx
+const { mxCellTracker, mxGraph } = mx
 
 export class CellTooltip {
   graph: any
 
   constructor(graph: any) {
     this.graph = graph
+  }
+
+  highlightCellOnHover() {
+    // Adds a highlight on the cell under the mousepointer
+    new mxCellTracker(this.graph);
   }
 
   init() {

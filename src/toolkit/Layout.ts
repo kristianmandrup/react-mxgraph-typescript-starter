@@ -1,5 +1,5 @@
 import mx from "./mx";
-const { mxConstants, mxHierarchicalLayout, mxRadialTreeLayout, mxCircleLayout } = mx
+const { mxFastOrganicLayout, mxConstants, mxHierarchicalLayout, mxRadialTreeLayout, mxCircleLayout } = mx
 
 export enum EDirection {
   North,
@@ -42,6 +42,15 @@ export class Layout {
     return layout
   }
 
+  fastOrganic(force: number = 140) {
+    // Creates a layout algorithm to be used
+    // with the graph
+    const layout = new mxFastOrganicLayout(graph);
+    this.layout = layout
+    // Moves stuff wider apart than usual
+    layout.forceConstant = force;
+    return layout
+  }
   
 
   hierarchical(direction: TDirection) {

@@ -33,3 +33,11 @@ export { Markers } from './Markers'
 export { MonitorWorkflowState } from './MonitorWorkflowState'
 export { VertexHandler } from './VertexHandler'
 export { Window } from './Window'
+export { 
+  MessageShape, 
+  LinkShape, 
+  createShapeExtension, 
+  CustomShape, 
+  BoxShape, 
+  ConnectorShape 
+} from "./shapes";

@@ -1,35 +1,13 @@
-import { mxgraphFactory } from "ts-mxgraph";
-import { createShapeExtension } from './Extends';
-
-const { mxCellRenderer } = mxgraphFactory({
-  mxLoadResources: false,
-  mxLoadStylesheets: false,
-});
-
-interface ICustomShape {
-  register(name: string)
-  redrawPath(path, _x, _y, w, h, isForeground)
-}
-
-export class CustomShape implements ICustomShape {
-  shape: any
-
-  constructor(shapeConstructor?: any) {
-    const shape: any = createShapeExtension(shapeConstructor)
-    this.shape = shape
-    shape.prototype.redrawPath = this.redrawPath
-  }
-
-  register(name: string) {
-    mxCellRenderer.registerShape(name, this.shape.constructor);  
-  }  
-
-  redrawPath(path, _x, _y, w, h, isForeground) {
-  }
-}
+import { CustomShape } from './CustomShape';
+import mx from "../mx";
+const { mxCylinder } = mx
 
 export class BoxShape extends CustomShape {
   extrude = 10
+
+  constructor() {
+    super('box', mxCylinder)    
+  }
 
   /*
       the mxCylinder's redrawPath method is "overridden".

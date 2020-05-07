@@ -8,9 +8,9 @@ const { mxCylinder, mxUtils } = mxgraphFactory({
 export const createShapeExtension = (shapeConstructor = mxCylinder) => {
   function MyShape(this: any, ...args) {
     const ctx = this
-    mxCylinder.call(ctx, undefined, undefined, undefined);
+    shapeConstructor.call(ctx, undefined, undefined, undefined);
   };
   
-  mxUtils.extend(MyShape, mxCylinder);
+  mxUtils.extend(MyShape, shapeConstructor);  
   return MyShape
 }

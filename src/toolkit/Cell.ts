@@ -42,6 +42,12 @@ export class Cell {
     this.graph = graph
   }
 
+  // See lod (level-of-detail) example
+  setDetailLevel(cell, level) {
+    cell.lod = level
+    return this
+  }
+
   createIsConstituent(cell) {
     return this.graph.getCurrentCellStyle(cell)['constituent'] === '1';
   };

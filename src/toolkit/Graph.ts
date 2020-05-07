@@ -2,6 +2,7 @@ import mx from "./mx";
 import { DrawLayer } from './Layers';
 import { StyleSheet } from './Stylesheet';
 import { VertexToolHandler } from './VertexToolHandler';
+import { Permission } from './Permission';
 const { mxEdgeHandler, mxGraphHandler, mxMorphing, mxEvent, mxCellState, mxRubberband, mxKeyHandler, mxGraphModel, mxGraph } = mx
 
 export const createGraphWithModel = (container: Element, model?: any) => {
@@ -39,10 +40,12 @@ export class Graph {
   editor: any
   _rubberband: any
   _keyHandler: any
+  currentPermission: Permission
 
-  constructor(graph: any, editor?: any) {
+  constructor(graph: any, editor?: any, { currentPermission }: any = {}) {
     this.graph = graph
     this.editor = editor
+    this.currentPermission = currentPermission || {}
   }
 
   get model() {
@@ -53,6 +56,18 @@ export class Graph {
     this.graph.isPart(cell)
   }
 
+  setVisibilityDetailLevel() {
+    const { graph } = this
+    graph.isCellVisible = (cell) => {
+      const inView = () => cell.lod / 2 < graph.view.scale;
+      return !cell.lod || inView();
+    };  
+  }
+
+  setAllowLoops(value: boolean) {
+    this.graph.setAllowLoops(value);
+  }
+    
   setFoldingEnabled(value: boolean) {
     this.graph.foldingEnabled = value;
   }

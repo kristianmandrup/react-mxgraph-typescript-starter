@@ -3,6 +3,8 @@ import { DrawLayer } from './Layers';
 import { StyleSheet } from './Stylesheet';
 import { VertexToolHandler } from './VertexToolHandler';
 import { Permission } from './Permission';
+import { Editing } from './Editing';
+import { Guides } from './Guides';
 const { mxEdgeHandler, mxGraphHandler, mxMorphing, mxEvent, mxCellState, mxRubberband, mxKeyHandler, mxGraphModel, mxGraph } = mx
 
 export const createGraphWithModel = (container: Element, model?: any) => {
@@ -43,11 +45,31 @@ export class Graph {
   _rubberband: any
   _keyHandler: any
   currentPermission: Permission
+  _editing: any
+  _guides: any
 
   constructor(graph: any, editor?: any, { currentPermission }: any = {}) {
     this.graph = graph
     this.editor = editor
     this.currentPermission = currentPermission || {}
+  }
+
+  get editing() {
+    return this._editing
+  }
+
+  setEditing(props?: any) {
+    this._editing = new Editing(this.graph, props)
+    return this._editing
+  }
+
+  get guides() {
+    return this._guides
+  }
+
+  setGuides(props?: any) {
+    this._guides = new Guides(this.graph)
+    return this._guides
   }
 
   get model() {

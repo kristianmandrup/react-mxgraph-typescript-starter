@@ -7,9 +7,10 @@ export class Editor {
   editor: any
   containers: any
 
-  constructor() {
+  constructor(graph: any) {
     const editor = new mxEditor();
     this.editor = editor
+    this.editor.graph = graph
   }
 
   createContainers() {

@@ -7,6 +7,7 @@ export class VertexToolHandler {
   graph: any
   domNode: any
   vertexHandler: any
+  
   state: any
   actions: any
 
@@ -14,11 +15,12 @@ export class VertexToolHandler {
     this.graph = graph
     this.state = state
     this.vertexHandler = new mxVertexHandler(state = {});
+    
     this.actions = this.createActions()
   }
 
   init(...args) {
-    this.vertexHandler.init(...args)
+    this.vertexHandler.init(...args)    
   }
 
   createActions() {

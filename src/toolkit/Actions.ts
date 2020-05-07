@@ -1,6 +1,7 @@
 import mx from "./mx";
 import { defaults } from './defaults';
-const { mxCodec, mxUtils } = mx
+import { StyleCombiner } from './Style';
+const { mxCodec, mxUtils, mxConstants } = mx
 
 const createExportModal = (graph, showModalWindow, props) => cell => {
   let { size, title } = props
@@ -65,5 +66,81 @@ export class Actions {
 
   createExportModal(props: any, factory = createExportModal) {
     this.doExport = factory(this.graph, this.showModalWindow, props)    
+  }
+
+  get rotationMap() {
+    return {
+      east: 'south',
+      south: 'west',
+      west: 'north',
+      north: 'east'
+    }
+  }
+
+  flipHorizontal() {
+    const { graph } = this
+    graph.toggleCellStyles(mxConstants.STYLE_FLIPH);
+  }
+  
+  flipVertical() {
+    const { graph } = this
+    graph.toggleCellStyles(mxConstants.STYLE_FLIPV);
+  }
+
+  setStyle(newStyle: string, cell?: any) {
+    const { graph } = this
+    cell = cell || graph.getSelectionCell();
+					
+    if (!cell) return
+    const style = graph.getModel().getStyle(cell)      
+    if (!style) return
+
+    const combinedStyle = this.combineStyle(style, newStyle)
+
+    graph.getModel().setStyle(cell, combinedStyle);
+  }
+
+  combineStyle(style, newStyle): string {
+    return this.createStyleCombiner().combine(style, newStyle)
+  }
+
+  createStyleCombiner() {
+    return new StyleCombiner()
+  }
+  
+  rotate(cell?: any) {
+    const { graph } = this
+    cell = cell || graph.getSelectionCell();    
+    if (!cell) return
+
+    var geo = graph.getCellGeometry(cell);
+    if (!geo) return
+    
+    graph.getModel().beginUpdate();
+    try {      
+      // Rotates the size and position in the geometry
+      geo = geo.clone();
+      geo.x += geo.width / 2 - geo.height / 2;
+      geo.y += geo.height / 2 - geo.width / 2;
+      var tmp = geo.width;
+      geo.width = geo.height;
+      geo.height = tmp;
+      
+      graph.getModel().setGeometry(cell, geo);
+      
+      // Reads the current direction and advances by 90 degrees
+      var state = graph.view.getState(cell);
+      
+      if (state === null) {
+        graph.getModel().endUpdate();
+        return
+      }
+      let dir = state.style[mxConstants.STYLE_DIRECTION] || 'east' 
+      dir = this.rotationMap[dir]
+      graph.setCellStyles(mxConstants.STYLE_DIRECTION, dir, [cell]);
+    }
+    finally {
+      graph.getModel().endUpdate();
+    }
   }
 }

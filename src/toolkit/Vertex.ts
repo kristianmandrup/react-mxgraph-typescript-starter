@@ -31,7 +31,7 @@ export class Vertex {
   constructor(graph: any, vertex: any) {
     this.graph = graph
     this.vertex = vertex
-  }
+  } 
 
   setGeometry(geometry) {
     this.vertex.geometry = geometry

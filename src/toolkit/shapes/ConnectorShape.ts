@@ -1,4 +1,4 @@
-import mx from "./mx";
+import mx from "../mx";
 import { IPosition, ISize } from '../types';
 const { mxPoint } = mx
 
@@ -7,35 +7,64 @@ type OffsetParams = {
   direction?: string
   index?: number
 }
-type SetVertexOpts = {style: string = '', pos: IPosition, size: ISize}
+
+type CenterConnParams = {
+  offSet?: IPosition
+  pos?: IPosition
+  size?: ISize
+}
+
+type SetVertexOpts = {style: string, pos: IPosition, size: ISize}
 
 export class ConnectorShape {
   graph: any
   vertex: any
   vProto: any
-  defaultStyle = 'fontColor=' + 'black' + ';strokeColor=' + 'black'
+  color = `black`
 
-  constructor(graph: any, {defaultStyle}: any = {}) {
+  constructor(graph: any, { color }: any = {}) {
     this.graph = graph
-    if (defaultStyle) {
-      this.defaultStyle = defaultStyle 
-    }    
+    this.color = color
+  }
+
+  get defaultStyle() {
+    const { color } = this
+    return `fontColor=${color};strokeColor=${color}`
   }
 
   setVertex(parent: any, {style, pos, size }: SetVertexOpts) {
     const { graph } = this
-    // TODO: merge with default pos, size objects
+    pos = {
+      x: 80,
+      y: 40,
+      ...pos || {}
+    }
+    size = {
+      width: 80,
+      height: 40,
+      ...size || {}
+    }
+    
     const { x, y } = pos
     const { width, height } = size
-    const vertex = graph.insertVertex(parent, null, 'J1', x || 80, y || 40, width || 40, height || 80, style);
+    const vertex = graph.insertVertex(parent, null, 'J1', x, y, width, height, style);
     vertex.setConnectable(false);  
     this.vertex = vertex
   }
 
-  get connectorStyle() {
-    return `shape=line;align=left;verticalAlign=middle;fontSize=10;` +
-    `routingCenterX=-0.5;spacingLeft=12;`+ this.defaultStyle  
+  connectorStyle(direction = 'west') {
+    const { defaultStyle } = this
+    return this.connStyles[direction] + defaultStyle    
   }
+
+  get connStyles() {    
+    return {
+      west: `shape=line;align=left;verticalAlign=middle;fontSize=10;routingCenterX=-0.5;spacingLeft=12;`,
+      east: `shape=line;align=right;verticalAlign=middle;fontSize=10;routingCenterX=0.5;spacingRight=12;`,
+      center: `shape=triangle;direction=south;spacingBottom=12;align=center;portConstraint=horizontal;fontSize=8`
+    }
+  }
+
 
   get offSets() {
     return {
@@ -50,22 +79,19 @@ export class ConnectorShape {
   connectorProto({pos, size, offset}: {pos?: IPosition, size?: ISize, offset?: OffsetParams} = {}) {
     const { graph, vertex } = this
     pos = {
-      ...{
-        x: 0,
-        y: 0
-      },
+      x: 0,
+      y: 0,
       ...pos
     }
     size = {
-      ...{
-        width: 10,
-        height: 16
-      },
+      width: 10,
+      height: 16,
       ...size
     }
     const { x, y } = pos
     const { width, height } = size
-    var vProto = graph.insertVertex(vertex, null, '1', x, y, width, height, this.connectorStyle);
+    const style = this.connectorStyle(offset && offset.direction)
+    var vProto = graph.insertVertex(vertex, null, '1', x, y, width, height, style);
     vProto.geometry.relative = true;
     
     const defaultOffset = {index: 0, direction: 'west'}
@@ -85,8 +111,44 @@ export class ConnectorShape {
     var vconn = vProto.clone();
     vconn.value = value;
     const pos = this.calcPos(vProto, props)
+    const { direction } = props
+    const style = this.connectorStyle(direction)
     vconn.geometry.offset = new mxPoint(pos.x, pos.y);
+    vconn.setStyle(style)
     vertex.insert(vconn);  
+  }
+
+  centerConnector(props: CenterConnParams = {}) {
+    const { vertex, vProto } = this
+    let { offSet, size, pos } = props
+    size = {
+      width: 10,
+      height: 4,
+      ...size || {}
+    } 
+    pos = {
+      x: 0.5,
+      y: 1,
+      ...pos || {}
+    } 
+
+    var vconn = vProto.clone();
+    vconn.value = 'clk';
+    vconn.geometry.x = pos.x;
+    vconn.geometry.y = pos.y;
+    vconn.geometry.width = size.width;
+    vconn.geometry.height = size.height;
+
+    vconn.style =  this.connectorStyle('center');
+    
+    offSet = {
+      x: -4,
+      y: -4,
+      ...offSet || {}
+    }
+
+    vconn.geometry.offset = new mxPoint(offSet.x, offSet.y);
+    vertex.insert(vconn);    
   }
 
   calcPos(v, {offSet, direction, index }: OffsetParams = {}): IPosition {

@@ -5,6 +5,7 @@ import { VertexToolHandler } from './VertexToolHandler';
 import { Permission } from './Permission';
 import { Editing } from './Editing';
 import { Guides } from './Guides';
+import { Group } from './Group';
 const { mxEdgeHandler, mxGraphHandler, mxMorphing, mxEvent, mxCellState, mxRubberband, mxKeyHandler, mxGraphModel, mxGraph } = mx
 
 export const createGraphWithModel = (container: Element, model?: any) => {
@@ -65,6 +66,10 @@ export class Graph {
 
   get guides() {
     return this._guides
+  }
+
+  createGroup(name: string = 'Group', label: string = 'group') {
+    return new Group(name, label)
   }
 
   setGuides(props?: any) {
